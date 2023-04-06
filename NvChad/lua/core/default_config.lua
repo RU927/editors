@@ -1,4 +1,5 @@
 -- Chadrc overrides this file
+local highlights = require("core.highlights")
 
 local M = {}
 
@@ -10,13 +11,16 @@ M.options = {
 }
 
 M.ui = {
+
   ------------------------------- base46 -------------------------------------
   -- hl = highlights
-  hl_add = {},
-  hl_override = {},
+  -- hl_add = {},
+  -- hl_override = {},
+	hl_override = highlights.override,
+	hl_add = highlights.add,
   changed_themes = {},
-  theme_toggle = { "onedark", "one_light" },
-  theme = "onedark", -- default theme
+	theme_toggle = { "gruvbox", "gruvchad" },
+	theme = "gruvbox",
   transparency = false,
 
   -- cmp themeing
@@ -34,7 +38,7 @@ M.ui = {
 
   ------------------------------- nvchad_ui modules -----------------------------
   statusline = {
-    theme = "default", -- default/vscode/vscode_colored/minimal
+    theme = "minimal", -- default/vscode/vscode_colored/minimal
     -- default/round/block/arrow separators work only for default statusline theme
     -- round and block will work for minimal theme only
     separator_style = "default",
@@ -51,7 +55,7 @@ M.ui = {
 
   -- nvdash (dashboard)
   nvdash = {
-    load_on_startup = false,
+    load_on_startup = true,
 
     header = {
       "           ▄ ▄                   ",

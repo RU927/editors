@@ -1,20 +1,10 @@
-dofile(vim.g.base46_cache .. "lsp")
-require "nvchad_ui.lsp"
 
 local M = {}
-local utils = require "core.utils"
-
--- export on_attach & capabilities for custom lspconfigs
 
 M.on_attach = function(client, bufnr)
   client.server_capabilities.documentFormattingProvider = false
   client.server_capabilities.documentRangeFormattingProvider = false
 
-  utils.load_mappings("lspconfig", { buffer = bufnr })
-
-  if client.server_capabilities.signatureHelpProvider then
-    require("nvchad_ui.signature").setup(client)
-  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -50,7 +40,6 @@ require("lspconfig").lua_ls.setup {
         library = {
           [vim.fn.expand "$VIMRUNTIME/lua"] = true,
           [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/extensions/nvchad_types"] = true,
           [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
         },
         maxPreload = 100000,
@@ -58,15 +47,6 @@ require("lspconfig").lua_ls.setup {
       },
     },
   },
-}
-require("lspconfig").pyright.setup {
-  on_attach = M.on_attach,
-  capabilities = M.capabilities,
-}
-
-require("lspconfig").r_language_server.setup {
-  on_attach = M.on_attach,
-  capabilities = M.capabilities,
 }
 
 return M

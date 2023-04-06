@@ -1,5 +1,8 @@
+local overrides = require("plugins.configs.overrides")
+
 local options = {
-  ensure_installed = { "lua" },
+  -- ensure_installed = { "lua" },
+  ensure_installed = overrides.treesitter.ensure_installed,
 
   highlight = {
     enable = true,

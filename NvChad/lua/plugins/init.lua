@@ -1,3 +1,7 @@
+--local overrides = require("plugins.configs.overrides")
+local functions = require("core.functions")
+Is_Enabled = functions.is_enabled
+
 -- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
 -- List of all default plugins & their definitions
 local default_plugins = {
@@ -142,6 +146,15 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      -- format & linting
+      {
+        "jose-elias-alvarez/null-ls.nvim",
+        config = function()
+          require "plugins.configs.null-ls"
+        end,
+      },
+    },
     init = function()
       require("core.utils").lazy_load "nvim-lspconfig"
     end,
@@ -250,22 +263,112 @@ local default_plugins = {
     end,
   },
 
+  -- {{{ toggleterm.nvim
+
+  {
+    "akinsho/toggleterm.nvim",
+    -- enabled = Is_Enabled("toggleterm.nvim"),
+    version = "*",
+    opts = {
+      size = 13,
+      open_mapping = [[<c-\>]],
+      shade_filetypes = {},
+      shade_terminals = true,
+      shading_factor = "1",
+      start_in_insert = true,
+      persist_size = true,
+      direction = "horizontal",
+    },
+    keys = {
+      {
+        "<leader>Tf",
+        "<leader>Tl",
+        "<leader>Tr",
+      },
+    },
+    -- config = function()
+    --   require "plugins.configs.toggleterm"
+    -- end,
+  },
+
+  -- ----------------------------------------------------------------------- }}}
+  -- {{{ ranger
+  {
+  "kevinhwang91/rnvimr",
+  enabled = Is_Enabled("rnvimr"),
+  lazy = false,
+  -- keys = { "<leader>r" },
+  },
+  -- ----------------------------------------------------------------------- }}}
+  -- {{{ vim-dadbod-ui
+  {
+  "kristijanhusak/vim-dadbod-ui",
+  enabled = Is_Enabled("vim-dadbod-ui"),
+  dependencies = {
+    "tpope/vim-dadbod",
+    "kristijanhusak/vim-dadbod-completion",
+    "tpope/vim-dotenv",
+  },
+  keys = { { "<leader><leader>db", ":tab DBUI<cr>" } },
+  init = function()
+    require "plugins.configs.database"
+  end,
+  },
+
+  -- ----------------------------------------------------------------------- }}}
+  -- {{{ Nvim-R
+  {
+    "jalvesaq/Nvim-R",
+    enabled = Is_Enabled("nvim-r"),
+    ft = { "r" },
+    -- keys = { "<Bslash>rf" },
+  },
+
+  -- ----------------------------------------------------------------------- }}}
+  -- {{{ undotree
+  {
+    'mbbill/undotree',
+		enabled = Is_Enabled("undotree"),
+    cmd = 'UndotreeToggle',
+    lazy = true,
+    config = function()
+      require "plugins.configs.undotree"
+    end,
+  },
+	-- ----------------------------------------------------------------------- }}}
+	-- {{{ vimtex
+	{
+		"lervag/vimtex",
+		ft = { "tex", "texx" },
+		enabled = Is_Enabled("vimtex"),
+		dependencies = { "Traap/vim-bundle-vimtex" },
+    config = function()
+      require "plugins.configs.vimtex"
+    end,
+	},
+
+	-- ----------------------------------------------------------------------- }}}
+  -- {{{ which-key
   -- Only load whichkey after all the gui
   {
     "folke/which-key.nvim",
-    keys = { "<leader>", '"', "'", "`" },
+    keys = { "<leader>", "<Bslash>" , '"', "'", "`" },
     init = function()
       require("core.utils").load_mappings "whichkey"
     end,
-    opts = function()
-      return require "plugins.configs.whichkey"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "whichkey")
-      require("which-key").setup(opts)
+    -- opts = function()
+    --   return require "plugins.configs.whichkey"
+    -- end,
+    -- config = function(_, opts)
+    --   dofile(vim.g.base46_cache .. "whichkey")
+    --   require("which-key").setup(opts)
+    -- end,
+    config = function ()
+      require "plugins.configs.which-key"
     end,
   },
 }
+	-- ----------------------------------------------------------------------- }}}
 
 local config = require("core.utils").load_config()
 
