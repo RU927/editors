@@ -3,6 +3,7 @@ local merge_tb = vim.tbl_deep_extend
 
 M.load_config = function()
   local config = require "core.default_config"
+  ---[[
   local chadrc_path = vim.api.nvim_get_runtime_file("lua/custom/chadrc.lua", false)[1]
 
   if chadrc_path then
@@ -11,11 +12,13 @@ M.load_config = function()
     config.mappings = M.remove_disabled_keys(chadrc.mappings, require "core.mappings")
     config = merge_tb("force", config, chadrc)
   end
+  --]]
 
   config.mappings.disabled = nil
   return config
 end
 
+---[[
 M.remove_disabled_keys = function(chadrc_mappings, default_mappings)
   if not chadrc_mappings then
     return default_mappings
@@ -50,6 +53,7 @@ M.remove_disabled_keys = function(chadrc_mappings, default_mappings)
 
   return default_mappings
 end
+--]]
 
 M.load_mappings = function(section, mapping_opt)
   local function set_section_map(section_values)
@@ -75,6 +79,7 @@ M.load_mappings = function(section, mapping_opt)
 
   local mappings = require("core.utils").load_config().mappings
 
+---[[
   if type(section) == "string" then
     mappings[section]["plugin"] = nil
     mappings = { mappings[section] }
@@ -83,7 +88,9 @@ M.load_mappings = function(section, mapping_opt)
   for _, sect in pairs(mappings) do
     set_section_map(sect)
   end
+--]]
 end
+
 
 M.lazy_load = function(plugin)
   vim.api.nvim_create_autocmd({ "BufRead", "BufWinEnter", "BufNewFile" }, {

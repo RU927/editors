@@ -76,9 +76,15 @@ local register = {
 		},
 		g = {
 			name = "Git",
+      h = {
+        name = "hunk"
+      },
 		},
 		i = {
 			name = "+LSP",
+      w = {
+        name = "workspace folder"
+      },
 		},
 		-- k = {
 		-- 	name = "+kill runner",
