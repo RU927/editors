@@ -145,7 +145,7 @@ M.Actions = {
     ["<leader>aa"] = { "<cmd>lua PdfAnnots()<CR>", "annotate" },
     ["<leader>ab"] = { "<cmd>terminal bibexport -o %:p:r.bib %:p:r.aux<CR>", "bib export" },
     ["<leader>ac"] = { "<cmd>VimtexClean<CR>", "clean aux" },
-    -- ["<leader>ag"] = { "<cmd>e ~/.config/nvim/templates/Glossary.tex<CR>", "edit glossary" },
+    -- ["<leader>ag"] = { "<cmd>e ~/.config/nvim/lua/custom/LaTeX/templates/Glossary.tex<CR>", "edit glossary" },
     ["<leader>ah"] = { "<cmd>lua _HTOP_TOGGLE()<CR>", "htop" },
     ["<leader>ai"] = { "<cmd>IlluminateToggle<CR>", "illuminate" },
     ["<leader>ak"] = {
@@ -159,11 +159,10 @@ M.Actions = {
     -- ["<leader>al"] = { '<cmd>lua toggle_cmp()<CR>', "LSP"},
     ["<leader>ap"] = { '<cmd>lua require("nabla").popup()<CR>', "preview symbols" },
     ["<leader>ar"] = { "<cmd>VimtexErrors<CR>", "report errors" },
-    ["<leader>as"] = { "<cmd>e ~/.config/nvim/snippets/tex.snippets<CR>", "edit snippets" },
+    ["<leader>as"] = { "<cmd>e ~/.config/nvim/lua/custom/LaTeX/snippets/tex.snippets<CR>", "edit snippets" },
     ["<leader>av"] = { "<plug>(vimtex-context-menu)", "vimtex menu" },
   },
 }
-
 -- ------------------------------------------------------------------------- }}}
 -- {{{ d - panDoc
 M.panDoc = {
@@ -731,35 +730,35 @@ M.Templates = {
   n = {
     name = "TEMPLATES",
     ["<leader>yp"] = {
-      "<cmd>read ~/.config/nvim/templates/PhilPaper.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/PhilPaper.tex<CR>",
       "PhilPaper.tex",
     },
     ["<leader>yl"] = {
-      "<cmd>read ~/.config/nvim/templates/Letter.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Letter.tex<CR>",
       "Letter.tex",
     },
     ["<leader>yg"] = {
-      "<cmd>read ~/.config/nvim/templates/Glossary.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Glossary.tex<CR>",
       "Glossary.tex",
     },
     ["<leader>yh"] = {
-      "<cmd>read ~/.config/nvim/templates/HandOut.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/HandOut.tex<CR>",
       "HandOut.tex",
     },
     ["<leader>yb"] = {
-      "<cmd>read ~/.config/nvim/templates/PhilBeamer.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/PhilBeamer.tex<CR>",
       "PhilBeamer.tex",
     },
     ["<leader>ys"] = {
-      "<cmd>read ~/.config/nvim/templates/SubFile.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/SubFile.tex<CR>",
       "SubFile.tex",
     },
     ["<leader>yr"] = {
-      "<cmd>read ~/.config/nvim/templates/Root.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Root.tex<CR>",
       "Root.tex",
     },
     ["<leader>ym"] = {
-      "<cmd>read ~/.config/nvim/templates/MultipleAnswer.tex<CR>",
+      "<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/MultipleAnswer.tex<CR>",
       "MultipleAnswer.tex",
     },
   },
