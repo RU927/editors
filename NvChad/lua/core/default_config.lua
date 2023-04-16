@@ -19,8 +19,8 @@ M.ui = {
 	hl_override = highlights.override,
 	hl_add = highlights.add,
   changed_themes = {},
-	theme_toggle = { "gruvbox", "gruvchad" },
-	theme = "gruvbox",
+  theme = "gruvbox",
+	theme_toggle = { "gruvchad", "gruvbox" },
   transparency = false,
 
   -- cmp themeing

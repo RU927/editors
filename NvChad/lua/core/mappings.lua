@@ -83,7 +83,7 @@ M.general = {
     ["n"] = { "nzzzv", "replace search result" },
     ["N"] = { "Nzzzv", "replace srarch result" },
     -- join lines focus
-    ["J"] = { "mzJ`z", "concatenate string" },
+    -- ["J"] = { "mzJ`z", "concatenate string" },
     --- quick env file edit
     -- ["<leader>ee"] = { ":vsp .env<CR>", "", opts = {nowait = true} },
     -- {{{ Folding commands.
