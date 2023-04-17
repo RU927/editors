@@ -1,4 +1,4 @@
-Customize = require("custom.configs.customize")
+Customize = require("custom.core.customize")
 
 local M = {}
 
