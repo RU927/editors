@@ -1,4 +1,4 @@
-local overrides = require("custom.core.overrides")
+local overrides = require("custom.configs.overrides")
 local functions = require("custom.core.functions")
 Is_Enabled = functions.is_enabled
 
@@ -61,7 +61,6 @@ local plugins = {
 		"jalvesaq/Nvim-R",
 		enabled = Is_Enabled("nvim-r"),
 		ft = { "r" },
-		-- keys = { "<Bslash>rf" },
 	},
 
 	-- ----------------------------------------------------------------------- }}}
@@ -85,31 +84,41 @@ local plugins = {
 		dependencies = {
 			-- "saadparwaiz1/cmp_luasnip",
 			-- "hrsh7th/cmp-nvim-lua",
-			"hrsh7th/cmp-nvim-lsp",
+			-- "hrsh7th/cmp-nvim-lsp",
 			-- "hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			--[[
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-cmdline",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-calc",
-      "hrsh7th/cmp-nvim-lua",
-      "hrsh7th/cmp-nvim-lsp-document-symbol",
-      -- "hrsh7th/cmp-nvim-lsp-signature-help",
-      'jalvesaq/cmp-nvim-r',
-      'hrsh7th/cmp-omni', -- helps Vimtex completions
-      "f3fora/cmp-spell",
-      'aspeddro/cmp-pandoc.nvim',
+			-- "hrsh7th/cmp-path",
+			-- "hrsh7th/cmp-nvim-lsp",
+			-- "hrsh7th/cmp-buffer",
+			-- "hrsh7th/cmp-path",
+			-- "hrsh7th/cmp-nvim-lua",
+			---[[
+			"hrsh7th/cmp-calc",
+			"hrsh7th/cmp-cmdline",
+			"hrsh7th/cmp-nvim-lsp-document-symbol",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"jalvesaq/cmp-nvim-r",
+			"hrsh7th/cmp-omni", -- helps Vimtex completions
+			"f3fora/cmp-spell",
+			"aspeddro/cmp-pandoc.nvim",
 
-      'L3MON4D3/LuaSnip', -- движок для снипетов
-      "saadparwaiz1/cmp_luasnip", -- автодополнения для сниппетов
-      'rafamadriz/friendly-snippets',   -- набор готовых сниппетов для всех языков
+			-- "L3MON4D3/LuaSnip", -- движок для снипетов
+			-- "saadparwaiz1/cmp_luasnip", -- автодополнения для сниппетов
+			-- "rafamadriz/friendly-snippets", -- набор готовых сниппетов для всех языков
+			--]]
 
-  --]]
-			config = function()
-				require("custom.configs.cmp")
-			end,
+			-- opts = function()
+			-- 	return require("custom.configs.cmps")
+			-- end,
+			-- config = function(_, opts)
+			-- 	require("cmp").setup(opts)
+			-- end,
+
+			-- config = function()
+			-- 	require("custom.configs.cmps")
+			-- end,
+
+			opts = overrides.cmp,
+			-- opts = require("custom.configs.cmps"),
 		},
 	},
 	-- --------------------------------------------------------------------- }}}
@@ -128,7 +137,7 @@ local plugins = {
 	-- {{{ which-key
 	{
 		"folke/which-key.nvim",
-		-- opts = overrides.whichkey.opts,
+		-- opts = overrides.whichkey,
 		config = function()
 			require("custom.configs.which-key")
 		end,

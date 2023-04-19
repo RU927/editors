@@ -7,9 +7,7 @@ return {
 	hl_add = highlights.add,
 	statusline = {
 		theme = "minimal", -- default/vscode/vscode_colored/minimal
-		-- default/round/block/arrow separators work only for default statusline theme
-		-- round and block will work for minimal theme only
-		separator_style = "default",
+		separator_style = "default", --default,block,round,arrow
 		overriden_modules = nil,
 	},
 	nvdash = {
@@ -17,5 +15,16 @@ return {
 		-- buttons = {
 		-- 	{ "  Mappings", "Spc c h", "NvCheatsheet" },
 		-- },
+	},
+	cmp = {
+		lspkind_text = true,
+		style = "atom", -- default/flat_light/flat_dark/atom/atom_colored
+		icons = true,
+		border_color = "grey_fg", -- only applicable for "default" style, use color names from base30 variables
+		selected_item_bg = "colored", -- colored / simple
+	},
+
+	telescope = {
+		style = "bordered", -- borderless / bordered
 	},
 }

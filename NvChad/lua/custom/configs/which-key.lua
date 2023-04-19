@@ -43,9 +43,9 @@ local opts = {
 }
 
 local mappings = {
-  ["e"] = { "<cmd>NvimTreeToggle<CR>"           , "explorer" },
-  ["u"] = { "<cmd>UndotreeToggle<CR>"           , "undo" },
-  ["r"] = { "<cmd>RnvimrToggle<CR>"             , "undo" },
+	["e"] = { "<cmd>NvimTreeToggle<CR>", "explorer" },
+	["u"] = { "<cmd>UndotreeToggle<CR>", "undo" },
+	["r"] = { "<cmd>RnvimrToggle<CR>", "undo" },
 }
 
 local register = {
@@ -76,15 +76,15 @@ local register = {
 		},
 		g = {
 			name = "Git",
-      h = {
-        name = "hunk"
-      },
+			h = {
+				name = "hunk",
+			},
 		},
 		i = {
 			name = "+LSP",
-      w = {
-        name = "workspace folder"
-      },
+			w = {
+				name = "workspace folder",
+			},
 		},
 		-- k = {
 		-- 	name = "+kill runner",
@@ -134,7 +134,7 @@ local register = {
 	},
 }
 
-which_key.setup(setup)
+-- which_key.setup(setup)
 -- which_key.opts(opts)
 -- which_key.mappings(mappings)
 which_key.register(register)
