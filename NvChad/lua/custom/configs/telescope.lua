@@ -29,7 +29,7 @@ telescope.setup {
     winblend = 0,
     path_display = { "smart" },
   },
-  pickers = {
+ZZ  pickers = {
     colorscheme = { enable_preview = true },
   },
   load_extensions = { "yank_history", "bibtex" },

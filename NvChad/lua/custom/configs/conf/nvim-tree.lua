@@ -70,7 +70,10 @@ local options = {
 }
 
 return options
---[[
+
+
+
+---[[
 local status_ok, nvim_tree = pcall(require, "nvim-tree")
 if not status_ok then
   return
@@ -81,7 +84,8 @@ if not config_status_ok then
   return
 end
 
-local tree_cb = nvim_tree_config.nvim_tree_callback
+-- local tree_cb = nvim_tree_config.nvim_tree_callback
+-- local tree_cb = require("nvim_tree_config").nvim_tree_callback 
 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1

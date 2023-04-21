@@ -49,7 +49,7 @@ cmp.setup({
 		},
 	},
 	formatting = {
-		fields = { "menu", "kind", "abbr", "menu" },
+		fields = { "menu", "kind", "abbr" },
 		format = function(entry, vim_item)
 			vim_item.kind = string.format("%s", Constants.icons.lsp_kinds[vim_item.kind])
 			vim_item.menu = (Constants.completion.source_mapping)[entry.source.name]

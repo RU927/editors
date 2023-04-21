@@ -602,7 +602,7 @@ M.terminals = {
 		-- end
 
 		-- if Is_Enabled("toggleterm.nvim") then
-		["<Bslash><Bslash>"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "New terminal" },
+		-- ["<Bslash><Bslash>"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "New terminal" },
 		["<leader>Tf"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "" },
 		["<leader>Tl"] = { "<cmd>lua Customize.toggleterm.lazygit()<cr>", "" },
 		["<leader>Tm"] = { "<cmd>lua Customize.toggleterm.neomutt()<cr>", "" },

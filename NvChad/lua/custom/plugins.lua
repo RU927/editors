@@ -4,21 +4,24 @@ Is_Enabled = functions.is_enabled
 
 --@type NvPluginSpec[]
 local plugins = {
+	{
+		"goolord/alpha-nvim",
+		lazy = false,
+		config = function()
+			require("custom.configs.alpha")
+		end,
+	},
+
+	{
+		"lewis6991/gitsigns.nvim",
+		ft = "gitcommit",
+		opts = overrides.gitsigns,
+	},
 
 	{
 		"akinsho/toggleterm.nvim",
 		enabled = Is_Enabled("toggleterm.nvim"),
 		version = "*",
-		opts = {
-			size = 13,
-			open_mapping = [[<c-\>]],
-			shade_filetypes = {},
-			shade_terminals = true,
-			shading_factor = "1",
-			start_in_insert = true,
-			persist_size = true,
-			direction = "horizontal",
-		},
 		keys = {
 			{
 				"<leader>Tf",
@@ -26,9 +29,9 @@ local plugins = {
 				"<leader>Tr",
 			},
 		},
-		-- config = function()
-		--   require "custom.configs.conf.toggleterm"
-		-- end,
+		config = function()
+			require("custom.configs.toggleterm")
+		end,
 	},
 
 	-- ----------------------------------------------------------------------- }}}
@@ -49,7 +52,7 @@ local plugins = {
 			"kristijanhusak/vim-dadbod-completion",
 			"tpope/vim-dotenv",
 		},
-		keys = { { "<leader><leader>db", ":tab DBUI<cr>" } },
+		keys = { { "<localleader><localleader>db", ":tab DBUI<cr>" } },
 		init = function()
 			require("custom.configs.database")
 		end,
@@ -82,15 +85,6 @@ local plugins = {
 		enabled = Is_Enabled("nvim-cmp"),
 
 		dependencies = {
-			-- "saadparwaiz1/cmp_luasnip",
-			-- "hrsh7th/cmp-nvim-lua",
-			-- "hrsh7th/cmp-nvim-lsp",
-			-- "hrsh7th/cmp-buffer",
-			-- "hrsh7th/cmp-path",
-			-- "hrsh7th/cmp-nvim-lsp",
-			-- "hrsh7th/cmp-buffer",
-			-- "hrsh7th/cmp-path",
-			-- "hrsh7th/cmp-nvim-lua",
 			---[[
 			"hrsh7th/cmp-calc",
 			"hrsh7th/cmp-cmdline",
@@ -106,19 +100,7 @@ local plugins = {
 			-- "rafamadriz/friendly-snippets", -- набор готовых сниппетов для всех языков
 			--]]
 
-			-- opts = function()
-			-- 	return require("custom.configs.cmps")
-			-- end,
-			-- config = function(_, opts)
-			-- 	require("cmp").setup(opts)
-			-- end,
-
-			-- config = function()
-			-- 	require("custom.configs.cmps")
-			-- end,
-
-			opts = overrides.cmp,
-			-- opts = require("custom.configs.cmps"),
+			-- opts = overrides.cmp,
 		},
 	},
 	-- --------------------------------------------------------------------- }}}

@@ -11,17 +11,17 @@ return {
 		overriden_modules = nil,
 	},
 	nvdash = {
-		load_on_startup = true,
-		-- buttons = {
-		-- 	{ "  Mappings", "Spc c h", "NvCheatsheet" },
-		-- },
+		load_on_startup = false,
+		buttons = {
+			{ "  Mappings", "Spc c h", "NvCheatsheet" },
+		},
 	},
 	cmp = {
 		lspkind_text = true,
 		style = "atom", -- default/flat_light/flat_dark/atom/atom_colored
 		icons = true,
 		border_color = "grey_fg", -- only applicable for "default" style, use color names from base30 variables
-		selected_item_bg = "colored", -- colored / simple
+		selected_item_bg = "simple", -- colored / simple
 	},
 
 	telescope = {

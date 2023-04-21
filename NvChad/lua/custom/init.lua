@@ -1,7 +1,6 @@
-
 local function escape(str)
-  local escape_chars = [[;,."|\]]
-  return vim.fn.escape(str, escape_chars)
+	local escape_chars = [[;,."|\]]
+	return vim.fn.escape(str, escape_chars)
 end
 
 local en = [[qwertyuiop[]asdfghjkl;zxcvbnm,.]]
@@ -10,7 +9,7 @@ local en_shift = [[QWERTYUIOP{}ASDFGHJKL:ZXCVBNM<>]]
 local ru_shift = [[ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЯЧСМИТЬБЮ]]
 vim.opt.langmap = vim.fn.join({ escape(ru_shift) .. ";" .. escape(en_shift), escape(ru) .. ";" .. escape(en) }, ",")
 
-
+vim.opt.shell = "/usr/bin/zsh" -- set zsh as shell for integrated terminal
 
 -- local autocmd = vim.api.nvim_create_autocmd
 
@@ -25,7 +24,7 @@ vim.g.mapleader = " "
 -- vim.g.maplocalleader = " "
 -- vim.g.maplocalleader = ","
 --for R
-vim.g.maplocalleader = vim.api.nvim_replace_termcodes('<Bslash>', false, false, true)
+vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<Bslash>", false, false, true)
 --[[
 
 -- vim.g.snippets = "luasnip"
@@ -114,21 +113,21 @@ for k, v in pairs(options) do
 end
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
--- vim.cmd [[set iskeyword+=-]]            -- unites dashed words
+-- vim.cmd [[set iskeyword+=-]]
+-- unites dashed words
 
 -- CLIPBOARD -- (for yanky)
 -- to avoid "target string not available" error
 vim.g.clipboard = {
-  name = "xsel_override",
-  copy = {
-    ["+"] = "xsel --input --clipboard",
-    ["*"] = "xsel --input --primary",
-  },
-  paste = {
-    ["+"] = "xsel --output --clipboard",
-    ["*"] = "xsel --output --primary",
-  },
-  cache_enabled = 1,
+	name = "xsel_override",
+	copy = {
+		["+"] = "xsel --input --clipboard",
+		["*"] = "xsel --input --primary",
+	},
+	paste = {
+		["+"] = "xsel --output --clipboard",
+		["*"] = "xsel --output --primary",
+	},
+	cache_enabled = 1,
 }
 --]]
-
