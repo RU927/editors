@@ -81,27 +81,19 @@ local plugins = {
 	-- {{{ Events and dependencies
 	{
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
-		enabled = Is_Enabled("nvim-cmp"),
-
 		dependencies = {
-			---[[
-			"hrsh7th/cmp-calc",
-			"hrsh7th/cmp-cmdline",
-			"hrsh7th/cmp-nvim-lsp-document-symbol",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
-			"jalvesaq/cmp-nvim-r",
-			"hrsh7th/cmp-omni", -- helps Vimtex completions
-			"f3fora/cmp-spell",
-			"aspeddro/cmp-pandoc.nvim",
-
-			-- "L3MON4D3/LuaSnip", -- движок для снипетов
-			-- "saadparwaiz1/cmp_luasnip", -- автодополнения для сниппетов
-			-- "rafamadriz/friendly-snippets", -- набор готовых сниппетов для всех языков
-			--]]
-
-			-- opts = overrides.cmp,
+			{
+				"hrsh7th/cmp-calc",
+				"hrsh7th/cmp-cmdline",
+				"hrsh7th/cmp-nvim-lsp-document-symbol",
+				"hrsh7th/cmp-nvim-lsp-signature-help",
+				"jalvesaq/cmp-nvim-r",
+				-- "hrsh7th/cmp-omni", -- helps Vimtex completions
+				"f3fora/cmp-spell",
+				"aspeddro/cmp-pandoc.nvim",
+			},
 		},
+		opts = overrides.cmp,
 	},
 	-- --------------------------------------------------------------------- }}}
 	-- {{{ vimtex

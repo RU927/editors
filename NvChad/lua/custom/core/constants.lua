@@ -275,23 +275,22 @@ Constants = {
 		},
 
 		sources = {
-			{ name = "nvim_lsp", keyword_length = 2, max_item_count = 30, group_index = 2 },
-			{ name = "buffer", keyword_length = 3, max_item_count = 30 },
+			{ name = "nvim_lsp", keyword_length = 1, max_item_count = 30 },
+			{ name = "luasnip", keyword_length = 3, max_item_count = 30 },
+			{ name = "buffer", keyword_length = 1, max_item_count = 30 },
+			{ name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
+			{ name = "path", keyword_length = 1, max_item_count = 30 },
 			{ name = "calc", keyword_length = 2, max_item_count = 30 },
 			-- { name = "latex_symbols", keyword_length = 1, max_item_count = 30 },
 			{
 				name = "latex_symbols",
-				filetype = { "tex", "latex" },
-				option = { cache = true }, -- avoids reloading each time
 				keyword_length = 1,
 				max_item_count = 30,
+				filetype = { "tex", "latex" },
+				option = { cache = true }, -- avoids reloading each time
 			},
-			{ name = "luasnip", keyword_length = 2, max_item_count = 30 },
-			{ name = "nvim_lsp_signature_help", group_index = 2 },
+			{ name = "nvim_lsp_signature_help", keyword_length = 2, max_item_count = 30 },
 			{ name = "cmp_nvim_r", filetype = { "r" } },
-			{ name = "omni" },
-			{ name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
-			{ name = "path", keyword_length = 2, max_item_count = 30 },
 			{
 				name = "spell",
 				keyword_length = 5,
@@ -304,6 +303,7 @@ Constants = {
 				},
 			},
 		},
+		--]]
 	},
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ End Constants table.

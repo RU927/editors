@@ -334,19 +334,7 @@ M.nvimtree = {
 }
 
 M.cmp = {
-	field_arrangement = {
-		atom = { "abbr", "menu" },
-		atom_colored = { "abbr", "menu" },
-	},
-
 	sources = Constants.completion.sources,
-	formating = {
-		format = function(entry, vim_item)
-			vim_item.kind = string.format("%s", Constants.icons.lsp_kinds[vim_item.kind])
-			vim_item.menu = (Constants.completion.source_mapping)[entry.source.name]
-			return vim_item
-		end,
-	},
 }
 
 return M
