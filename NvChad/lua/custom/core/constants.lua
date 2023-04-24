@@ -3,7 +3,6 @@ local Constants = {}
 -- {{{ Begin Constants table.  These are items used through out Neovim.
 
 Constants = {
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ lua_ls settings
 
@@ -13,7 +12,6 @@ Constants = {
 			telemetry = { enable = false },
 		},
 	},
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ Languages lsp_config, mason, and treesitter ensures are installed.
 
@@ -37,7 +35,7 @@ Constants = {
 			-- "texlab",
 			-- "tsserver",
 			"yamlls",
-			-- "r_language_server",
+			"r_language_server",
 		},
 		mason = {
 			"bash-language-server",
@@ -61,9 +59,8 @@ Constants = {
 			-- "texlab",
 			-- "typescript-language-server",
 			"yaml-language-server",
-			-- "r-languageserver",
+			"r-languageserver",
 		},
-
 		treesitter = {
 			"bash",
 			"c",
@@ -90,7 +87,6 @@ Constants = {
 			"r",
 		},
 	},
-
 	-- ------------------------------------------------------------------------- }}}
 	-- {{{ Languages lsp_config, mason, and treesitter ensures are disabled.
 
@@ -103,7 +99,6 @@ Constants = {
 			"markdown",
 		},
 	},
-
 	-- ------------------------------------------------------------------------- }}}
 	-- {{{ File type events
 
@@ -119,7 +114,6 @@ Constants = {
 		-- "BufEnter *.rs",
 		-- "BufEnter *.ts",
 	},
-
 	-- ------------------------------------------------------------------------- }}}
 	-- {{{ icons
 
@@ -209,7 +203,6 @@ Constants = {
 			zip = { icon = "", color = "#EBCB8B", name = "zip" },
 		},
 	},
-
 	-- ------------------------------------------------------------------------- }}}
 	-- {{{ Rainbow colors
 
@@ -223,14 +216,12 @@ Constants = {
 			"LawnGreen",
 		},
 	},
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ Display boarders
 
 	display_border = {
 		border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
 	},
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ keybinding options
 
@@ -244,7 +235,6 @@ Constants = {
 			noremap = true, -- use `noremap` when creating keymaps
 			nowait = true, -- use `nowait` when creating keymaps
 		},
-
 		visual = {
 			mode = "v", -- VISUAL mode
 			prefix = "<leader>", -- Override this value.
@@ -255,7 +245,6 @@ Constants = {
 			nowait = true, -- use `nowait` when creating keymaps
 		},
 	},
-
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ Completion source mapping
 
@@ -273,7 +262,6 @@ Constants = {
 			omni = "[VimTex]",
 			-- omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
 		},
-
 		sources = {
 			{ name = "nvim_lsp", keyword_length = 1, max_item_count = 30 },
 			{ name = "luasnip", keyword_length = 3, max_item_count = 30 },
