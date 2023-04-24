@@ -48,7 +48,7 @@ lvim.plugins = {
 
   { "christoomey/vim-tmux-navigator" },
   { "tpope/vim-surround" },
-  { "felipec/vim-sanegx", event = "BufRead" },
+  { "felipec/vim-sanegx",            event = "BufRead" },
   {
     "windwp/nvim-ts-autotag",
     config = function()
@@ -81,6 +81,13 @@ lvim.plugins = {
       end)
     end,
   },
+
+  --latex plugins
+  { "lervag/vimtex" },
+  { "kdheepak/cmp-latex-symbols" },
+  { "KeitaNakamura/tex-conceal.vim" },
+  { "SirVer/ultisnips" },
+
 }
 
 table.insert(lvim.plugins, {

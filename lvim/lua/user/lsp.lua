@@ -6,6 +6,7 @@ vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "tsserver" }
 
 local common_on_attach = lvim_lsp.common_on_attach
 local common_capabilities = lvim_lsp.common_capabilities()
+local common_on_init = lvim.lsp.common_on_init()
 
 lvim.lsp.on_attach_callback = function(client, bufnr)
   if lvim.colorscheme == 'gruvbox' then
@@ -25,6 +26,12 @@ ts.setup({
     capabilities = common_capabilities,
     on_attach = common_on_attach,
   },
+})
+
+require("lvim.lsp.manager").setup("texlab", {
+  on_attach = common_on_attach,
+  on_init = common_on_init,
+  capabilities = common_capabilities,
 })
 
 -- -- Keeping this here for reference
@@ -60,6 +67,10 @@ formatters.setup({
       "json",
     }
   },
+  {
+    command = "latexindent",
+    filetypes = { "tex" }
+  },
 })
 
 local linters = require "lvim.lsp.null-ls.linters"
@@ -67,6 +78,10 @@ linters.setup({
   {
     command = "eslint_d",
     filetypes = { "javascript", "typescript", "typescriptreact", "json" }
+  },
+  {
+    command = "chktex",
+    filetypes = { "tex" }
   },
 })
 
