@@ -8,18 +8,15 @@ M.general = {
 		-- go to  beginning and end
 		["<C-b>"] = { "<ESC>^i", "beginning of line" },
 		["<C-a>"] = { "<End>", "end of line" },
-
 		-- navigate within insert mode
 		["<C-h>"] = { "<Left>", "move left" },
 		["<C-l>"] = { "<Right>", "move right" },
 		["<C-j>"] = { "<Down>", "move down" },
 		["<C-k>"] = { "<Up>", "move up" },
-
 		-- Press jk fast to enter
 		["jk"] = { "<escape>", "quit insert mode" },
 		["kj"] = { "<escape>", "quit insert mode" },
 	},
-
 	n = {
 		["<Esc>"] = { ":noh <CR>", "clear highlights" },
 		-- switch between windows
@@ -27,13 +24,10 @@ M.general = {
 		["<C-l>"] = { "<C-w>l", "window right" },
 		["<C-j>"] = { "<C-w>j", "window down" },
 		["<C-k>"] = { "<C-w>k", "window up" },
-
 		-- save
 		["<C-s>"] = { "<cmd> w <CR>", "save file" },
-
 		-- Copy all
 		["<C-y>"] = { "<cmd> %y+ <CR>", "copy whole file" },
-
 		-- line numbers
 		["<leader>n"] = { "<cmd> set nu! <CR>", "toggle line number" },
 		-- ["<leader>rn"] = { "<cmd> set rnu! <CR>", "toggle relative number" },
@@ -46,13 +40,10 @@ M.general = {
 		["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
 		["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
 		["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "move down", opts = { expr = true } },
-
 		-- new buffer
 		["bn"] = { "<cmd> enew <CR>", "new buffer" },
 		["ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
-
 		[";"] = { ":", "enter command mode", opts = { nowait = true } },
-
 		["wq"] = { ":wq<cr>", "write and quit" },
 		["qq"] = { ":q<cr>", "quit" },
 		-- Bdelete
@@ -96,17 +87,14 @@ M.general = {
 		-- Close current fold when open. Always open previous fold.
 		["zk"] = { "zckzOzz", "" },
 	},
-
 	t = {
 		["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "escape terminal mode" },
-
 		["<Esc><Esc>"] = { "<C-\\><C-n>", "" },
 		["<C-h>"] = { "<c-\\><c-n><c-w>h", "" },
 		["<C-j>"] = { "<c-\\><c-n><c-w>j", "" },
 		["<C-k>"] = { "<c-\\><c-n><c-w>k", "" },
 		["<C-l>"] = { "<c-\\><c-n><c-w>l", "" },
 	},
-
 	v = {
 		["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
 		["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "move down", opts = { expr = true } },
@@ -116,11 +104,9 @@ M.general = {
 		-- Move text up and down
 		["<A-j>"] = { ":m .+1<CR>==", "move down string" },
 		["<A-k>"] = { ":m .-2<CR>==", "move up string" },
-
 		["P"] = { '"_dP', "" },
 		["p"] = { '"_dp', "" },
 	},
-
 	x = {
 		["j"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "move down", opts = { expr = true } },
 		["k"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "move up", opts = { expr = true } },
@@ -142,7 +128,7 @@ M.Actions = {
 		["<leader>aa"] = { "<cmd>lua PdfAnnots()<CR>", "annotate" },
 		["<leader>ab"] = { "<cmd>terminal bibexport -o %:p:r.bib %:p:r.aux<CR>", "bib export" },
 		["<leader>ac"] = { "<cmd>VimtexClean<CR>", "clean aux" },
-		-- ["<leader>ag"] = { "<cmd>e ~/.config/nvim/lua/custom/LaTeX/templates/Glossary.tex<CR>", "edit glossary" },
+		-- ["<leader>ag"] = { "<cmd>e ~/.config/nvim/lua/custom/tex/templates/Glossary.tex<CR>", "edit glossary" },
 		["<leader>ah"] = { "<cmd>lua _HTOP_TOGGLE()<CR>", "htop" },
 		["<leader>ai"] = { "<cmd>IlluminateToggle<CR>", "illuminate" },
 		["<leader>ak"] = {
@@ -156,7 +142,7 @@ M.Actions = {
 		-- ["<leader>al"] = { '<cmd>lua toggle_cmp()<CR>', "LSP"},
 		["<leader>ap"] = { '<cmd>lua require("nabla").popup()<CR>', "preview symbols" },
 		["<leader>ar"] = { "<cmd>VimtexErrors<CR>", "report errors" },
-		["<leader>as"] = { "<cmd>e ~/.config/nvim/lua/custom/LaTeX/snippets/tex.snippets<CR>", "edit snippets" },
+		["<leader>as"] = { "<cmd>e ~/.config/nvim/lua/custom/tex/snippets/tex.snippets<CR>", "edit snippets" },
 		["<leader>av"] = { "<plug>(vimtex-context-menu)", "vimtex menu" },
 	},
 }
@@ -178,11 +164,9 @@ M.panDoc = {
 
 M.nvimtree = {
 	plugin = true,
-
 	n = {
 		-- toggle
 		["<C-n>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
-
 		-- focus
 		["<leader>e"] = { "<cmd> NvimTreeFocus <CR>", "focus nvimtree" },
 		--[[
@@ -247,10 +231,8 @@ M.find  = {
   },
 }
 --]]
-
 M.telescope = {
 	plugin = true,
-
 	n = {
 		--ben
 		["<leader>fc"] = { "<cmd>Telescope bibtex<CR>", "citations" },
@@ -271,17 +253,14 @@ M.telescope = {
 		["<leader>ft"] = { "<cmd> Telescope themes <CR>", "nvchad themes" },
 		-- pick a hidden term
 		["<leader>fT"] = { "<cmd> Telescope terms <CR>", "pick hidden term" },
-
 		["<leader>fF"] = { "<cmd>Telescope media_files<cr>", "" },
 		["<leader>fd"] = { "<cmd>Telescope diagnostics<cr>", "" },
 		["<leader>fi"] = {
 			"<cmd>lua require('telescope').extensions.media_files.media_files()<cr>",
 			"media files",
 		},
-
 		["<leader>fl"] = { "<cmd>Telescope resume<cr>", "resume" },
 		["<leader>fw"] = { "<cmd>Telescope grep_string<cr>", "grep string" },
-
 		-- git
 		["<leader>gs"] = { "<cmd>Telescope git_status<CR>", "open changed file" },
 		["<leader>gb"] = { "<cmd>Telescope git_branches<CR>", "checkout branch" },
@@ -293,7 +272,6 @@ M.telescope = {
 ---[[
 M.gitsigns = {
 	plugin = true,
-
 	n = {
 		["<leader>gg"] = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "lazygit" },
 		["<leader>gd"] = { "<cmd>Gitsigns diffthis HEAD<CR>", "diff" },
@@ -323,7 +301,6 @@ M.gitsigns = {
 			"Jump to next hunk",
 			opts = { expr = true },
 		},
-
 		["[c"] = {
 			function()
 				if vim.wo.diff then
@@ -337,7 +314,6 @@ M.gitsigns = {
 			"Jump to prev hunk",
 			opts = { expr = true },
 		},
-
 		-- Actions
 		-- ["<leader>ghs"] = { "<cmd>lua require 'gitsigns'.stage_hunk()<CR>", "stage hunk" },
 		-- ["<leader>ghu"] = {
@@ -349,21 +325,18 @@ M.gitsigns = {
 			end,
 			"Reset hunk",
 		},
-
 		["<leader>ghp"] = {
 			function()
 				require("gitsigns").preview_hunk()
 			end,
 			"Preview hunk",
 		},
-
 		["<leader>gb"] = {
 			function()
 				package.loaded.gitsigns.blame_line()
 			end,
 			"Blame line",
 		},
-
 		["<leader>gt"] = {
 			function()
 				require("gitsigns").toggle_deleted()
@@ -382,7 +355,6 @@ M.gitsigns = {
 
 M.lspconfig = {
 	plugin = true,
-
 	-- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
 
 	n = {
@@ -397,119 +369,102 @@ M.lspconfig = {
 		-- vim.diagnostic
 		-- vim.lsp
 		["<leader>il"] = { "<cmd>lua vim.lsp.codelens.run()<cr>", "lsp codelens" },
-
 		["gD"] = {
 			function()
 				vim.lsp.buf.declaration()
 			end,
 			"lsp declaration",
 		},
-
 		["gd"] = {
 			function()
 				vim.lsp.buf.definition()
 			end,
 			"lsp definition",
 		},
-
 		["K"] = {
 			function()
 				vim.lsp.buf.hover()
 			end,
 			"lsp hover",
 		},
-
 		["gi"] = {
 			function()
 				vim.lsp.buf.implementation()
 			end,
 			"lsp implementation",
 		},
-
 		["<leader>is"] = {
 			function()
 				vim.lsp.buf.signature_help()
 			end,
 			"lsp signature_help",
 		},
-
 		["<leader>iD"] = {
 			function()
 				vim.lsp.buf.type_definition()
 			end,
 			"lsp definition type",
 		},
-
 		["<leader>ir"] = {
 			function()
 				require("nvchad_ui.renamer").open()
 			end,
 			"lsp rename",
 		},
-
 		["<leader>ia"] = {
 			function()
 				vim.lsp.buf.code_action()
 			end,
 			"lsp code_action",
 		},
-
 		["gr"] = {
 			function()
 				vim.lsp.buf.references()
 			end,
 			"lsp references",
 		},
-
 		["<leader>id"] = {
 			function()
 				vim.diagnostic.open_float({ border = "rounded" })
 			end,
 			"floating diagnostic",
 		},
-
 		["[d"] = {
 			function()
 				vim.diagnostic.goto_prev()
 			end,
 			"goto prev",
 		},
-
 		["]d"] = {
 			function()
 				vim.diagnostic.goto_next()
 			end,
 			"goto_next",
 		},
-
 		["<leader>iq"] = {
 			function()
 				vim.diagnostic.setloclist()
 			end,
 			"diagnostic setloclist",
 		},
-
 		["<leader>if"] = {
 			function()
 				vim.lsp.buf.format({ async = true })
 			end,
 			"lsp formatting",
 		},
-
 		["<leader>iwa"] = {
 			function()
 				vim.lsp.buf.add_workspace_folder()
 			end,
 			"add workspace folder",
 		},
-
 		["<leader>iwr"] = {
 			function()
 				vim.lsp.buf.remove_workspace_folder()
 			end,
 			"remove workspace folder",
 		},
-
 		["<leader>iwl"] = {
 			function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
@@ -616,7 +571,6 @@ M.terminals = {
 ---[[
 M.nvterm = {
 	plugin = true,
-
 	t = {
 		-- toggle in terminal mode
 		["<A-i>"] = {
@@ -625,14 +579,12 @@ M.nvterm = {
 			end,
 			"toggle floating term",
 		},
-
 		["<A-h>"] = {
 			function()
 				require("nvterm.terminal").toggle("horizontal")
 			end,
 			"toggle horizontal term",
 		},
-
 		["<A-v>"] = {
 			function()
 				require("nvterm.terminal").toggle("vertical")
@@ -640,7 +592,6 @@ M.nvterm = {
 			"toggle vertical term",
 		},
 	},
-
 	n = {
 		-- toggle in normal mode
 		["<A-i>"] = {
@@ -649,21 +600,18 @@ M.nvterm = {
 			end,
 			"toggle floating term",
 		},
-
 		["<A-h>"] = {
 			function()
 				require("nvterm.terminal").toggle("horizontal")
 			end,
 			"toggle horizontal term",
 		},
-
 		["<A-v>"] = {
 			function()
 				require("nvterm.terminal").toggle("vertical")
 			end,
 			"toggle vertical term",
 		},
-
 		-- new
 		["<leader>h"] = {
 			function()
@@ -671,7 +619,6 @@ M.nvterm = {
 			end,
 			"new horizontal term",
 		},
-
 		["<leader>v"] = {
 			function()
 				require("nvterm.terminal").new("vertical")
@@ -689,7 +636,6 @@ M.wiki_whitespase = {
 	n = {
 		["<leader>wa"] = { "<cmd>edit $HOME/git/wiki/journal/A.md<cr>", "" },
 		["<leader>wb"] = { "<cmd>edit $HOME/git/wiki/journal/B.md<cr>", "" },
-
 		["<leader>we"] = { "<cmd>WikiExport<cr>", "" },
 		["<leader>wi"] = { "<cmd>WikiIndex<cr>", "" },
 		["<leader>wp"] = { "<cmd>WikiFzfPages<cr>", "" },
@@ -703,7 +649,6 @@ M.wiki_whitespase = {
 ---[[
 M.whichkey = {
 	plugin = true,
-
 	n = {
 		["<leader>wK"] = {
 			function()
@@ -728,35 +673,35 @@ M.Templates = {
 	n = {
 		name = "TEMPLATES",
 		["<leader>yp"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/PhilPaper.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/PhilPaper.tex<CR>",
 			"PhilPaper.tex",
 		},
 		["<leader>yl"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Letter.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/Letter.tex<CR>",
 			"Letter.tex",
 		},
 		["<leader>yg"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Glossary.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/Glossary.tex<CR>",
 			"Glossary.tex",
 		},
 		["<leader>yh"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/HandOut.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/HandOut.tex<CR>",
 			"HandOut.tex",
 		},
 		["<leader>yb"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/PhilBeamer.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/PhilBeamer.tex<CR>",
 			"PhilBeamer.tex",
 		},
 		["<leader>ys"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/SubFile.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/SubFile.tex<CR>",
 			"SubFile.tex",
 		},
 		["<leader>yr"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/Root.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/Root.tex<CR>",
 			"Root.tex",
 		},
 		["<leader>ym"] = {
-			"<cmd>read ~/.config/nvim/lua/custom/LaTeX/templates/MultipleAnswer.tex<CR>",
+			"<cmd>read ~/.config/nvim/lua/custom/tex/templates/MultipleAnswer.tex<CR>",
 			"MultipleAnswer.tex",
 		},
 	},
@@ -775,7 +720,6 @@ M.Surround = {
 
 M.tabufline = {
 	plugin = true,
-
 	n = {
 		-- cycle through buffers
 		["<tab>"] = {
@@ -784,14 +728,12 @@ M.tabufline = {
 			end,
 			"goto next buffer",
 		},
-
 		["<S-tab>"] = {
 			function()
 				require("nvchad_ui.tabufline").tabuflinePrev()
 			end,
 			"goto prev buffer",
 		},
-
 		-- close buffer + hide terminal buffer
 		-- ["<leader>x"] = {
 		--   function()
@@ -804,7 +746,6 @@ M.tabufline = {
 
 M.comment = {
 	plugin = true,
-
 	-- toggle comment in both modes
 	n = {
 		-- ["<leader>/"] = {
@@ -815,7 +756,6 @@ M.comment = {
 			"toggle comment",
 		},
 	},
-
 	v = {
 		-- ["<leader>/"] = {
 		["<leader>/"] = {
@@ -827,7 +767,6 @@ M.comment = {
 
 M.blankline = {
 	plugin = true,
-
 	n = {
 		["<leader>ic"] = {
 			function()
