@@ -106,8 +106,8 @@ function install_zotero_bibtex {
 		"https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}\
           /zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 
-	# mkdir -p ~/texmf/bibtex/bib
-	# ln -svf "~/REPOS/editors/latex/bst" ~/texmf/bibtex
+	mkdir -p ~/texmf/bibtex/bib
+	ln -svf ~/REPOS/editors/texmf/bst ~/texmf/bibtex
 }
 
 function install_lazygit {
