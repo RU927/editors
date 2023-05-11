@@ -5,6 +5,16 @@ Is_Enabled = functions.is_enabled
 --@type NvPluginSpec[]
 local plugins = {
 	{
+		"aspeddro/pandoc.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"jbyuki/nabla.nvim", -- optional
+		},
+		config = function()
+			require("pandoc").setup()
+		end,
+	},
+	{
 		"goolord/alpha-nvim",
 		lazy = false,
 		config = function()

@@ -151,11 +151,11 @@ M.Actions = {
 M.panDoc = {
 	-- plugin = true,
 	n = {
-		["<leader>dw"] = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.docx'<CR>", "word" },
-		["<leader>dm"] = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.md'<CR>", "markdown" },
-		["<leader>dh"] = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.html'<CR>", "html" },
-		["<leader>dl"] = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.tex'<CR>", "latex" },
-		["<leader>dp"] = { "<cmd>TermExec cmd='pandoc %:p -o %:p:r.pdf'<CR>", "pdf" },
+		["<leader>dw"] = { "<cmd>terminal pandoc %:p -o %:p:r.docx<CR>", "word" },
+		["<leader>dm"] = { "<cmd>terminal pandoc %:p -o %:p:r.md<CR>", "markdown" },
+		["<leader>dh"] = { "<cmd>terminal pandoc %:p -o %:p:r.html<CR>", "html" },
+		["<leader>dl"] = { "<cmd>terminal pandoc %:p -o %:p:r.tex<CR>", "latex" },
+		["<leader>dp"] = { "<cmd>terminal pandoc %:p -o %:p:r.pdf<CR>", "pdf" },
 		-- x = { "<cmd>echo "run: unoconv -f pdf path-to.docx""  , "word to pdf"},
 	},
 }
