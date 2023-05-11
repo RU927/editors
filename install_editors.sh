@@ -1,34 +1,117 @@
 #!/bin/bash
+# Fetch submodules
+# git submodule update --init --recursive
 
-function backup_configs {
-	echo -e "\u001b[33;1m Backing up existing files... \u001b[0m"
-	# mv -iv ~/.config/    ~/.config/
-	# mv -iv ~/.config/    ~/.config/
-	# mv -iv ~/.config/    ~/.config/
-	# mv -iv ~/.config/    ~/.config/
+RC='\e[0m'
+RED='\e[31m'
+YELLOW='\e[33m'
+GREEN='\e[32m'
+GREEN2='[32;1m'
+WHITE='[37;1m'
+BLUE='[34;1m'
 
-	# mv -iv ~/.            ~/.
-	# mv -iv ~/.            ~/.
-	# mv -iv ~/.            ~/.
-	echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
+RV='\u001b[7m'
+
+THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
+# THIS_REPO_PATH=$HOME/REPOS/reinst
+DOT_CFG_PATH=$THIS_REPO_PATH/config
+DOT_HOME_PATH=$THIS_REPO_PATH/home
+USR_CFG_PATH=$HOME/.config
+SRC_DIR=$HOME/src/lua
+FONT_DIR=$HOME/.local/share/fonts
+# USR_CFG_PATH=$THIS_REPO_PATH/test
+
+configExists() {
+	[[ -e "$1" ]] && [[ ! -L "$1" ]]
 }
 
-## -f удаляет имеющийся линк
-function setup_symlinks {
-	echo -e "\u001b[7m Setting up symlinks... \u001b[0m"
-	mkdir -p ~/.config
-	# ln -sfnv "$PWD/config/nvim/"          ~/.config/
-	ln -sfnv "$PWD/config/lazygit/" ~/.config/
-	ln -sfnv "$PWD/config/sheldon/" ~/.config/
-	ln -sfnv "$PWD/config/greenclip.cfg" ~/.config/
-	ln -sfnv "$PWD/config/greenclip.toml" ~/.config/
-
-	# ln -sfnv "$PWD/"                ~/.
-	# ln -sfnv "$PWD/"                ~/.
-	# ln -sfnv "$PWD/"                ~/.
-	# ln -sfnv "$PWD/"                ~/.
-	# ln -sfnv "$PWD/"                ~/.
+command_exists() {
+	command -v $1 >/dev/null 2>&1
 }
+
+checkEnv() {
+	## Check Package Handeler
+	PACKAGEMANAGER='apt dnf pacman'
+	for pgm in ${PACKAGEMANAGER}; do
+		if command_exists ${pgm}; then
+			PACKAGER=${pgm}
+			echo -e ${RV}"Using ${pgm}"
+		fi
+	done
+
+	if [ -z "${PACKAGER}" ]; then
+		echo -e "${RED}Can't find a supported package manager"
+		exit 1
+	fi
+
+	## Check if the current directory is writable.
+	PATHs="$THIS_REPO_PATH $USR_CFG_PATH "
+	for path in $PATHs; do
+		if [[ ! -w ${path} ]]; then
+			echo -e "${RED}Can't write to ${path}${RC}"
+			exit 1
+		fi
+	done
+}
+
+checkEnv
+
+function install_packages {
+	DEPENDENCIES='latexmk'
+
+	echo -e "${YELLOW}Installing required packages...${RC}"
+	if [[ $PACKAGER == "pacman" ]]; then
+		if ! command_exists yay; then
+			echo "Installing yay..."
+			sudo "${PACKAGER} --noconfirm -S base-devel"
+			$(cd /opt && sudo git clone https://aur.archlinux.org/yay-git.git && sudo chown -R \
+				${USER}:${USER} ./yay-git && cd yay-git && makepkg --noconfirm -si)
+		else
+			echo "Command yay already installed"
+		fi
+		yay --noconfirm -S ${DEPENDENCIES}
+	else
+		sudo ${PACKAGER} install -yq ${DEPENDENCIES}
+	fi
+}
+
+# function back_sym {
+# перед создание линков делает бекапы только тех пользовательских конфикураций,
+# файлы которых есть в ./config ./home
+# mkdir -p "$USR_CFG_PATH"
+# echo -e "${RV}${YELLOW} Backing up existing files... ${RC}"
+# for config in $(ls ${DOT_CFG_PATH}); do
+# 	if configExists "${USR_CFG_PATH}/${config}"; then
+# 		echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
+# 		if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
+# 			echo -e "${RED}Can't move the old config!${RC}"
+# 			exit 1
+# 		fi
+# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+# 	fi
+# 	echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
+# 	if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
+# 		echo echo -e "${RED}Can't link the config!${RC}"
+# 		exit 1
+# 	fi
+# done
+
+# for config in $(ls ${DOT_HOME_PATH}); do
+# 	if configExists "$HOME/.${config}"; then
+# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
+# if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
+# 			echo -e "${RED}Can't move the old config!${RC}"
+# 			exit 1
+# 		fi
+# 	fi
+# 	echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
+# 	if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
+# 		echo echo -e "${RED}Can't link the config!${RC}"
+# 		exit 1
+# 	fi
+# done
+
+# }
 
 function install_nodejs {
 	echo -e "\u001b[7m Installing NodeJS... \u001b[0m"
@@ -82,6 +165,8 @@ function install_neovim {
 function install_latex {
 	echo -e "\u001b[7m Installing latex \u001b[0m"
 	sudo apt install texlive
+	sudo apt-get install texlive-doc-ru
+	sudo apt-get install texlive-lang-cyrillic
 	# sudo apt install texlive-latex-extra
 	# sudo apt install texlive-full
 	latexmk --version

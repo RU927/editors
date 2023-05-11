@@ -110,7 +110,7 @@ local plugins = {
 	{
 		"lervag/vimtex",
 		ft = { "tex", "texx" },
-		enabled = Is_Enabled("vimtex"),
+		-- enabled = Is_Enabled("vimtex"),
 		dependencies = { "Traap/vim-bundle-vimtex" },
 		config = function()
 			require("custom.configs.vimtex")
