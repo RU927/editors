@@ -136,15 +136,11 @@ function install_neovim {
 
 	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 70
 
-	echo -e "\u001b[7m Cloning repos... \u001b[0m"
-	mkdir -p ~/REPOS/editors
-	git clone https://github.com/RU927/editors.git ~/REPOS/editors
-
 	# NvChad
 	# git clone https://github.com/NvChad/NvChad ~/.config/NvChad --depth 1
 	rm -rf ~/.config/nvim-NvChad/lua/custom
-	ln -vsf ~/REPOS/editors/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
-	ln -vsf ~/REPOS/editors/tex ~/REPOS/editors/nvim-NvChad/lua/custom/
+	ln -vsf ~/REPOS/re_writer/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
+	ln -vsf ~/REPOS/re_writer/tex ~/REPOS/re_writer/nvim-NvChad/lua/custom/
 
 	rm -rf ~/.config/nvim ~/.local/state/nvim ~/.local/share/nvim
 	ln -svf ~/.config/nvim-NvChad ~/.config/nvim
@@ -153,13 +149,13 @@ function install_neovim {
 
 	# Lunarvim
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-	ln -svf ~/REPOS/editors/lvim ~/.config/
+	ln -svf ~/REPOS/re_writer/lvim ~/.config/
 
 	# AstroNvim
 	rm -rf ~/.config/nvim-AstroNvim/lua/user/
-	ln -vsf "$HOME"/REPOS/editors/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
-	# git remote add origin git@github.com:RU927/editors
-	# ln -sfnv "~/REPOS/editors/latex/"         ~/.config/
+	ln -vsf "$HOME"/REPOS/re_writer/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
+	# git remote add origin git@github.com:RU927/re_writer
+	# ln -sfnv "~/REPOS/re_writer/latex/"         ~/.config/
 }
 
 function install_latex {
@@ -192,7 +188,7 @@ function install_zotero_bibtex {
           /zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 
 	mkdir -p ~/texmf/bibtex/bib
-	ln -svf ~/REPOS/editors/texmf/bst ~/texmf/bibtex
+	ln -svf ~/REPOS/re_writer/texmf/bst ~/texmf/bibtex
 }
 
 function install_lazygit {
