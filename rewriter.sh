@@ -166,7 +166,7 @@ function install_latex {
 	sudo apt-get install texlive-lang-cyrillic
 	# sudo apt install texlive-latex-extra
 	# sudo apt install texlive-full
-	latexmk --version
+	# latexmk --version
 }
 
 function install_zotero_bibtex {
@@ -182,12 +182,8 @@ function install_zotero_bibtex {
 	# sudo ln -s /opt/zotero/zotero.desktop ~/.local/share/applications/zotero.desktop
 
 	echo -e "\u001b[7m Installing bibtex  \u001b[0m"
-	BIBTEX_VERSION=$(curl -s "https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest" |
-		grep -Po '"tag_name": "v\K[^"]*')
-	curl -Lo zotero-better-bibtex${BIBTEX_VERSION}.xpi \
-		"https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}\
-          /zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
-
+	BIBTEX_VERSION=$(curl -s "https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+	curl -Lo zotero-better-bibtex${BIBTEX_VERSION}.xpi "https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}/zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 	mkdir -p ~/texmf/bibtex/bib
 	ln -svf ~/REPOS/re_writer/texmf/bst ~/texmf/bibtex
 }
