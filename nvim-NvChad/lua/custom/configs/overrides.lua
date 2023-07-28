@@ -1,4 +1,5 @@
 Constants = require("custom.core.constants")
+
 local M = {}
 
 M.gitsigns = {
@@ -333,8 +334,72 @@ M.nvimtree = {
 	-- },
 }
 
+-- dofile(vim.g.base46_cache .. "cmp")
+-- local cmp_ui = require("core.utils").load_config().ui.cmp
 M.cmp = {
-	sources = Constants.completion.sources,
+	-- formatting = nil,
+	formatting = {
+		fields = { "kind", "abbr", "menu" },
+		-- mode = "symbol_text",
+		-- with_text = true,
+		format = function(_, item)
+			-- local icons = require("nvchad_ui.icons").lspkind
+			-- local icon = (cmp_ui.icons and icons[item.kind]) or ""
+			--
+			-- icon = " " .. icon .. " "
+			item.menu = {
+				buffer = "[Buffer]",
+				latex_symbols = "[Symbols]",
+				luasnip = "[Snippet]",
+				nvim_lsp = "[LSP]",
+				nvim_lua = "[Lua]",
+				path = "[Path]",
+				spell = "[Spell]",
+				cmp_nvim_r = "[R]",
+				cmdline = "[CMD]",
+				omni = "[VimTex]",
+				-- omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
+			}
+			-- item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
+			-- item.kind = icon
+			-- icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
+			-- item.kind = string.format("%s %s", icon, cmp_ui.lspkind_text and item.kind or "")
+
+			-- item.kind = icon
+			return item
+		end,
+	},
+	sources = {
+		-- { name = "buffer", keyword_length = 1, max_item_count = 30 },
+		-- { name = "nvim_lsp", keyword_length = 1, max_item_count = 30 },
+		-- { name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
+		-- { name = "luasnip", keyword_length = 3, max_item_count = 30 },
+		-- { name = "path", keyword_length = 1, max_item_count = 30 },
+		-- { name = "calc", keyword_length = 2, max_item_count = 30 },
+		-- { name = "latex_symbols", keyword_length = 1, max_item_count = 30 },
+		-- {
+		-- 	name = "latex_symbols",
+		-- 	keyword_length = 1,
+		-- 	max_item_count = 30,
+		-- 	filetype = { "tex", "latex" },
+		-- 	option = { cache = true }, -- avoids reloading each time
+		-- },
+		-- { name = "nvim_lsp_signature_help", keyword_length = 2, max_item_count = 30 },
+		-- { name = "cmp_nvim_r", filetype = { "r" } },
+		{ name = "cmp_nvim_r" },
+		-- {
+		-- 	name = "spell",
+		-- 	keyword_length = 5,
+		-- 	max_item_count = 30,
+		-- 	option = {
+		-- 		keep_all_entries = false,
+		-- 		enable_in_context = function()
+		-- 			return true
+		-- 		end,
+		-- 	},
+		-- },
+	},
+	--]]
 }
 
 return M

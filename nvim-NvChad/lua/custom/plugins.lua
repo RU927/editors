@@ -1,6 +1,7 @@
 local overrides = require("custom.configs.overrides")
-local functions = require("custom.core.functions")
-Is_Enabled = functions.is_enabled
+-- local functions = require("custom.core.functions")
+
+local cmp = require("cmp")
 
 --@type NvPluginSpec[]
 local plugins = {
@@ -30,8 +31,7 @@ local plugins = {
 
 	{
 		"akinsho/toggleterm.nvim",
-		enabled = Is_Enabled("toggleterm.nvim"),
-		version = "*",
+		-- version = "*",
 		keys = {
 			{
 				"<leader>Tf",
@@ -48,7 +48,6 @@ local plugins = {
 	-- {{{ ranger
 	{
 		"kevinhwang91/rnvimr",
-		enabled = Is_Enabled("rnvimr"),
 		lazy = false,
 		-- keys = { "<leader>r" },
 	},
@@ -56,7 +55,6 @@ local plugins = {
 	-- {{{ vim-dadbod-ui
 	{
 		"kristijanhusak/vim-dadbod-ui",
-		enabled = Is_Enabled("vim-dadbod-ui"),
 		dependencies = {
 			"tpope/vim-dadbod",
 			"kristijanhusak/vim-dadbod-completion",
@@ -72,7 +70,6 @@ local plugins = {
 	-- {{{ Nvim-R
 	{
 		"jalvesaq/Nvim-R",
-		enabled = Is_Enabled("nvim-r"),
 		ft = { "r" },
 	},
 
@@ -80,7 +77,6 @@ local plugins = {
 	-- {{{ undotree
 	{
 		"mbbill/undotree",
-		enabled = Is_Enabled("undotree"),
 		cmd = "UndotreeToggle",
 		lazy = true,
 		config = function()
@@ -101,16 +97,30 @@ local plugins = {
 				-- "hrsh7th/cmp-omni", -- helps Vimtex completions
 				"f3fora/cmp-spell",
 				"aspeddro/cmp-pandoc.nvim",
+				-- "onsails/lspkind-nvim",
 			},
 		},
-		opts = overrides.cmp,
+		opts = function()
+			-- local cmp = require("cmp")
+			local M = require("plugins.configs.cmp")
+			M.completion.completeopt = "menu,menuone,noselect"
+			M.mapping["<CR>"] = cmp.mapping.confirm({
+				behavior = cmp.ConfirmBehavior.Insert,
+				select = false,
+			})
+			-- table.insert(M.sources, { overrides.cmp.sources })
+			-- table.insert(M.sources, { name = "cmp-nvim-r" })
+			-- table.insert(M.formatting, { nil }) --{ overrides.cmp.formatting })
+
+			return M
+		end,
 	},
+
 	-- --------------------------------------------------------------------- }}}
 	-- {{{ vimtex
 	{
 		"lervag/vimtex",
 		ft = { "tex", "texx" },
-		-- enabled = Is_Enabled("vimtex"),
 		dependencies = { "Traap/vim-bundle-vimtex" },
 		config = function()
 			require("custom.configs.vimtex")
