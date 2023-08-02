@@ -7,18 +7,18 @@ RED='\e[31m'
 YELLOW='\e[33m'
 # GREEN='\e[32m'
 # GREEN2='[32;1m'
-WHITE='[37;1m'
+# WHITE='[37;1m'
 # BLUE='[34;1m'
 
 RV='\u001b[7m'
 
 THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
 # THIS_REPO_PATH=$HOME/REPOS/reinst
-DOT_CFG_PATH=$THIS_REPO_PATH/config
-DOT_HOME_PATH=$THIS_REPO_PATH/home
+# DOT_CFG_PATH=$THIS_REPO_PATH/config
+# DOT_HOME_PATH=$THIS_REPO_PATH/home
 USR_CFG_PATH=$HOME/.config
-SRC_DIR=$HOME/src/lua
-FONT_DIR=$HOME/.local/share/fonts
+# SRC_DIR=$HOME/src/lua
+# FONT_DIR=$HOME/.local/share/fonts
 # USR_CFG_PATH=$THIS_REPO_PATH/test
 
 configExists() {
@@ -26,16 +26,16 @@ configExists() {
 }
 
 command_exists() {
-	command -v $1 >/dev/null 2>&1
+	command -v "$1" >/dev/null 2>&1
 }
 
 checkEnv() {
 	## Check Package Handeler
-	PACKAGEMANAGER='apt dnf pacman'
+	PACKAGEMANAGER='apt dnf'
 	for pgm in ${PACKAGEMANAGER}; do
-		if command_exists ${pgm}; then
+		if command_exists "${pgm}"; then
 			PACKAGER=${pgm}
-			echo -e ${RV}"Using ${pgm}"
+			echo -e "${RV}Using ${pgm}"
 		fi
 	done
 
@@ -60,19 +60,7 @@ function install_packages {
 	DEPENDENCIES='latexmk'
 
 	echo -e "${YELLOW}Installing required packages...${RC}"
-	if [[ $PACKAGER == "pacman" ]]; then
-		if ! command_exists yay; then
-			echo "Installing yay..."
-			sudo "${PACKAGER} --noconfirm -S base-devel"
-			$(cd /opt && sudo git clone https://aur.archlinux.org/yay-git.git && sudo chown -R \
-				${USER}:${USER} ./yay-git && cd yay-git && makepkg --noconfirm -si)
-		else
-			echo "Command yay already installed"
-		fi
-		yay --noconfirm -S ${DEPENDENCIES}
-	else
-		sudo ${PACKAGER} install -yq ${DEPENDENCIES}
-	fi
+	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
 
 # function back_sym {
@@ -202,7 +190,7 @@ function install_lazygit {
 
 function all {
 	echo -e "\u001b[7m Setting up Dotfiles... \u001b[0m"
-	# install_packages
+	install_packages
 	backup_configs
 	setup_symlinks
 	install_nodejs
