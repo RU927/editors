@@ -14,10 +14,9 @@ RV='\u001b[7m'
 
 THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
 # THIS_REPO_PATH=$HOME/REPOS/reinst
-# DOT_CFG_PATH=$THIS_REPO_PATH/config
+DOT_CFG_PATH=$THIS_REPO_PATH/config
 # DOT_HOME_PATH=$THIS_REPO_PATH/home
 USR_CFG_PATH=$HOME/.config
-# SRC_DIR=$HOME/src/lua
 # FONT_DIR=$HOME/.local/share/fonts
 # USR_CFG_PATH=$THIS_REPO_PATH/test
 
@@ -57,60 +56,55 @@ checkEnv() {
 checkEnv
 
 function install_packages {
-	DEPENDENCIES='latexmk'
+	DEPENDENCIES='\
+  latexmk zathura \
+  '
 
 	echo -e "${YELLOW}Installing required packages...${RC}"
 	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
 }
 
-# function back_sym {
 # перед создание линков делает бекапы только тех пользовательских конфикураций,
 # файлы которых есть в ./config ./home
-# mkdir -p "$USR_CFG_PATH"
-# echo -e "${RV}${YELLOW} Backing up existing files... ${RC}"
-# for config in $(ls ${DOT_CFG_PATH}); do
-# 	if configExists "${USR_CFG_PATH}/${config}"; then
-# 		echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
-# 		if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
-# 			echo -e "${RED}Can't move the old config!${RC}"
-# 			exit 1
-# 		fi
-# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
-# 	fi
-# 	echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
-# 	if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
-# 		echo echo -e "${RED}Can't link the config!${RC}"
-# 		exit 1
-# 	fi
-# done
+function back_sym {
+	mkdir -p "$USR_CFG_PATH"
+	echo -e "${RV}${YELLOW} Backing up existing files... ${RC}"
+	for config in $(ls ${DOT_CFG_PATH}); do
+		if configExists "${USR_CFG_PATH}/${config}"; then
+			echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
+			if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
+				echo -e "${RED}Can't move the old config!${RC}"
+				exit 1
+			fi
+			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+		fi
+		echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
+		if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
+			echo echo -e "${RED}Can't link the config!${RC}"
+			exit 1
+		fi
+	done
 
-# for config in $(ls ${DOT_HOME_PATH}); do
-# 	if configExists "$HOME/.${config}"; then
-# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
-# if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
-# 			echo -e "${RED}Can't move the old config!${RC}"
-# 			exit 1
-# 		fi
-# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
-# 	fi
-# 	echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
-# 	if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
-# 		echo echo -e "${RED}Can't link the config!${RC}"
-# 		exit 1
-# 	fi
-# done
+	# for config in $(ls ${DOT_HOME_PATH}); do
+	# 	if configExists "$HOME/.${config}"; then
+	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
+	# if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
+	# 			echo -e "${RED}Can't move the old config!${RC}"
+	# 			exit 1
+	# 		fi
+	# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
+	# 	fi
+	# 	echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
+	# 	if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
+	# 		echo echo -e "${RED}Can't link the config!${RC}"
+	# 		exit 1
+	# 	fi
+	# done
 
-# }
+}
 
-function install_nodejs {
-	echo -e "\u001b[7m Installing NodeJS... \u001b[0m"
-	# nodejs
-	sudo apt remove nodejs
-	sudo apt autoremove
-	curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-	sudo apt install -y nodejs
-	node -v
-	npm -v
+function install_n {
+	echo -e "\u001b[7m Installing N... \u001b[0m"
 }
 
 function install_neovim {
@@ -171,37 +165,32 @@ function install_zotero_bibtex {
 
 	echo -e "\u001b[7m Installing bibtex  \u001b[0m"
 	BIBTEX_VERSION=$(curl -s "https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-	curl -Lo zotero-better-bibtex${BIBTEX_VERSION}.xpi "https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}/zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
+	curl -Lo "zotero-better-bibtex${BIBTEX_VERSION}.xpi" "https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}/zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 	mkdir -p ~/texmf/bibtex/bib
 	ln -svf ~/REPOS/re_writer/texmf/bst ~/texmf/bibtex
 }
 
-function install_lazygit {
+function install_l {
 	echo -e "\u001b[7m Installing  \u001b[0m"
-	LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" |
-		grep -Po '"tag_name": "v\K[^"]*')
-	curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_\
-          ${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-	tar xf lazygit.tar.gz lazygit
-	sudo install lazygit /usr/local/bin
-	rm -rf lazygit.tar.gz
-	lazygit --version
 }
 
 function all {
 	echo -e "\u001b[7m Setting up Dotfiles... \u001b[0m"
 	install_packages
-	backup_configs
+	back_sym
 	setup_symlinks
-	install_nodejs
+	# install_n
 	install_neovim
 	install_latex
 	install_zotero_bibtex
-	install_lazygit
-	install_fonts
+	# install_l
+	# install_fonts
 	echo -e "\u001b[7m Done! \u001b[0m"
 }
-
+if [ "$1" = "--backsym" ] || [ "$1" = "-b" ]; then
+	back_sym
+	exit 0
+fi
 if [ "$1" = "--all" -o "$1" = "-a" ]; then
 	all
 	exit 0
@@ -213,10 +202,10 @@ echo -e "\u001b[32;1m Setting up Dotfiles...\u001b[0m"
 echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (a) ALL \u001b[0m"
 echo -e "  \u001b[34;1m (1) neovim \u001b[0m"
-echo -e "  \u001b[34;1m (2) node \u001b[0m"
+echo -e "  \u001b[34;1m (2) n \u001b[0m"
 echo -e "  \u001b[34;1m (3) latex \u001b[0m"
 echo -e "  \u001b[34;1m (4) zotero \u001b[0m"
-echo -e "  \u001b[34;1m (5) lazygit \u001b[0m"
+echo -e "  \u001b[34;1m (5) l \u001b[0m"
 
 echo -e "  \u001b[31;1m (*) Anything else to exit \u001b[0m"
 
@@ -243,7 +232,7 @@ case $option in
 	;;
 
 "2")
-	install_nodejs
+	install_n
 	;;
 
 "3")
@@ -255,7 +244,7 @@ case $option in
 	;;
 
 "5")
-	install_lazygit
+	install_l
 	;;
 
 *)
