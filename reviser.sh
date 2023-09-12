@@ -69,7 +69,7 @@ function install_packages {
 function back_sym {
 	mkdir -p "$USR_CFG_PATH"
 	echo -e "${RV}${YELLOW} Backing up existing files... ${RC}"
-	for config in $(ls ${DOT_CFG_PATH}); do
+	for config in $(command ls "${DOT_CFG_PATH}"); do
 		if configExists "${USR_CFG_PATH}/${config}"; then
 			echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
 			if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
@@ -85,7 +85,7 @@ function back_sym {
 		fi
 	done
 
-	# for config in $(ls ${DOT_HOME_PATH}); do
+	# for config in $(command ls "${DOT_HOME_PATH}"); do
 	# 	if configExists "$HOME/.${config}"; then
 	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
 	# if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
@@ -109,21 +109,28 @@ function install_n {
 
 function install_neovim {
 	echo -e "\u001b[7m Installing depth... \u001b[0m"
-	pip3 install pynvim
-	pip3 install neovim-remote
-	npm i -g neovim
+	#
+	# pip3 install pynvim
+	# pip3 install neovim-remote
+	# npm i -g neovim
 
 	echo -e "\u001b[7m Installing nvim version managers... \u001b[0m"
-	cargo install bob-nvim
-	# bob use stable
 
-	sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 70
+	if command_exists cargo; then
+		if ! command_exists bob; then
+			cargo install bob-nvim
+			bob use stable
+		fi
+		# else
+	fi
+
+	# sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 70
 
 	# NvChad
 	# git clone https://github.com/NvChad/NvChad ~/.config/NvChad --depth 1
 	rm -rf ~/.config/nvim-NvChad/lua/custom
-	ln -vsf ~/REPOS/re_writer/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
-	ln -vsf ~/REPOS/re_writer/tex ~/REPOS/re_writer/nvim-NvChad/lua/custom/
+	ln -vsf "$THIS_REPO_PATH"/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
+	ln -vsf "$THIS_REPO_PATH"/tex "$THIS_REPO_PATH"/nvim-NvChad/lua/custom/
 
 	rm -rf ~/.config/nvim ~/.local/state/nvim ~/.local/share/nvim
 	ln -svf ~/.config/nvim-NvChad ~/.config/nvim
@@ -131,14 +138,13 @@ function install_neovim {
 	ln -svf ~/.local/state/nvim-NvChad ~/.local/state/nvim
 
 	# Lunarvim
-	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-	ln -svf ~/REPOS/re_writer/lvim ~/.config/
+	# bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
+	ln -svf "$THIS_REPO_PATH"/lvim ~/.config/
 
 	# AstroNvim
-	rm -rf ~/.config/nvim-AstroNvim/lua/user/
-	ln -vsf "$HOME"/REPOS/re_writer/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
-	# git remote add origin git@github.com:RU927/re_writer
-	# ln -sfnv "~/REPOS/re_writer/latex/"         ~/.config/
+	# rm -rf ~/.config/nvim-AstroNvim/lua/user/
+	# ln -vsf "$THIS_REPO_PATH"/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
+
 }
 
 function install_latex {
@@ -153,7 +159,7 @@ function install_latex {
 
 function install_zotero_bibtex {
 	echo -e "\u001b[7m Installing zotero  \u001b[0m"
-	wget -qO- https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
+	# wget -qO- https://raw.githubusercontent.com/retorquere/zotero-deb/master/install.sh | sudo bash
 	sudo apt update
 	sudo apt install zotero
 	# https://www.zotero.org/download/
@@ -167,7 +173,7 @@ function install_zotero_bibtex {
 	BIBTEX_VERSION=$(curl -s "https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 	curl -Lo "zotero-better-bibtex${BIBTEX_VERSION}.xpi" "https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}/zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 	mkdir -p ~/texmf/bibtex/bib
-	ln -svf ~/REPOS/re_writer/texmf/bst ~/texmf/bibtex
+	ln -svf "$THIS_REPO_PATH"/texmf/bst ~/texmf/bibtex
 }
 
 function install_l {
