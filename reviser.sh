@@ -5,20 +5,16 @@
 RC='\e[0m'
 RED='\e[31m'
 YELLOW='\e[33m'
-# GREEN='\e[32m'
-# GREEN2='[32;1m'
-# WHITE='[37;1m'
-# BLUE='[34;1m'
 
 RV='\u001b[7m'
 
-THIS_REPO_PATH="$(dirname "$(realpath "$0")")"
-# THIS_REPO_PATH=$HOME/REPOS/reinst
-DOT_CFG_PATH=$THIS_REPO_PATH/config
-# DOT_HOME_PATH=$THIS_REPO_PATH/home
-USR_CFG_PATH=$HOME/.config
+this_dir="$(dirname "$(realpath "$0")")"
+# this_dir=$HOME/REPOS/reinst
+dot_config=$this_dir/config
+# dot_home=$this_dir/home
+config_dir=$HOME/.config
 # FONT_DIR=$HOME/.local/share/fonts
-# USR_CFG_PATH=$THIS_REPO_PATH/test
+# config_dir=$this_dir/test
 
 configExists() {
 	[[ -e "$1" ]] && [[ ! -L "$1" ]]
@@ -44,7 +40,7 @@ checkEnv() {
 	fi
 
 	## Check if the current directory is writable.
-	PATHs="$THIS_REPO_PATH $USR_CFG_PATH "
+	PATHs="$this_dir $config_dir "
 	for path in $PATHs; do
 		if [[ ! -w ${path} ]]; then
 			echo -e "${RED}Can't write to ${path}${RC}"
@@ -67,25 +63,25 @@ function install_packages {
 # перед создание линков делает бекапы только тех пользовательских конфикураций,
 # файлы которых есть в ./config ./home
 function back_sym {
-	mkdir -p "$USR_CFG_PATH"
+	mkdir -p "$config_dir"
 	echo -e "${RV}${YELLOW} Backing up existing files... ${RC}"
-	for config in $(command ls "${DOT_CFG_PATH}"); do
-		if configExists "${USR_CFG_PATH}/${config}"; then
-			echo -e "${YELLOW}Moving old config ${USR_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}.old${RC}"
-			if ! mv "${USR_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}.old"; then
+	for config in $(command ls "${dot_config}"); do
+		if configExists "${config_dir}/${config}"; then
+			echo -e "${YELLOW}Moving old config ${config_dir}/${config} to ${config_dir}/${config}.old${RC}"
+			if ! mv "${config_dir}/${config}" "${config_dir}/${config}.old"; then
 				echo -e "${RED}Can't move the old config!${RC}"
 				exit 1
 			fi
 			echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 		fi
-		echo -e "${GREEN}Linking ${DOT_CFG_PATH}/${config} to ${USR_CFG_PATH}/${config}${RC}"
-		if ! ln -snf "${DOT_CFG_PATH}/${config}" "${USR_CFG_PATH}/${config}"; then
+		echo -e "${GREEN}Linking ${dot_config}/${config} to ${config_dir}/${config}${RC}"
+		if ! ln -snf "${dot_config}/${config}" "${config_dir}/${config}"; then
 			echo echo -e "${RED}Can't link the config!${RC}"
 			exit 1
 		fi
 	done
 
-	# for config in $(command ls "${DOT_HOME_PATH}"); do
+	# for config in $(command ls "${dot_home}"); do
 	# 	if configExists "$HOME/.${config}"; then
 	# 		echo -e "${YELLOW}Moving old config ${HOME}/.${config} to ${HOME}/.${config}.old${RC}"
 	# if ! mv "${HOME}/.${config}" "${HOME}/.${config}.old"; then
@@ -94,8 +90,8 @@ function back_sym {
 	# 		fi
 	# 		echo -e "${WHITE} Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old' ${RC}"
 	# 	fi
-	# 	echo -e "${GREEN}Linking ${DOT_HOME_PATH}/${config} to ${HOME}/.${config}${RC}"
-	# 	if ! ln -snf "${DOT_HOME_PATH}/${config}" "${HOME}/.${config}"; then
+	# 	echo -e "${GREEN}Linking ${dot_home}/${config} to ${HOME}/.${config}${RC}"
+	# 	if ! ln -snf "${dot_home}/${config}" "${HOME}/.${config}"; then
 	# 		echo echo -e "${RED}Can't link the config!${RC}"
 	# 		exit 1
 	# 	fi
@@ -109,28 +105,23 @@ function install_n {
 
 function install_neovim {
 	echo -e "\u001b[7m Installing depth... \u001b[0m"
-	#
 	# pip3 install pynvim
 	# pip3 install neovim-remote
 	# npm i -g neovim
-
-	echo -e "\u001b[7m Installing nvim version managers... \u001b[0m"
-
 	if command_exists cargo; then
 		if ! command_exists bob; then
+			echo -e "\u001b[7m Installing nvim version managers... \u001b[0m"
 			cargo install bob-nvim
 			bob use stable
 		fi
-		# else
 	fi
-
 	# sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 70
 
 	# NvChad
 	# git clone https://github.com/NvChad/NvChad ~/.config/NvChad --depth 1
 	rm -rf ~/.config/nvim-NvChad/lua/custom
-	ln -vsf "$THIS_REPO_PATH"/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
-	ln -vsf "$THIS_REPO_PATH"/tex "$THIS_REPO_PATH"/nvim-NvChad/lua/custom/
+	ln -vsf "$this_dir"/nvim-NvChad/lua/custom ~/.config/nvim-NvChad/lua
+	ln -vsf "$this_dir"/tex "$this_dir"/nvim-NvChad/lua/custom/
 
 	rm -rf ~/.config/nvim ~/.local/state/nvim ~/.local/share/nvim
 	ln -svf ~/.config/nvim-NvChad ~/.config/nvim
@@ -139,11 +130,11 @@ function install_neovim {
 
 	# Lunarvim
 	# bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh) -y
-	ln -svf "$THIS_REPO_PATH"/lvim ~/.config/
+	ln -svf "$this_dir"/lvim ~/.config/
 
 	# AstroNvim
 	# rm -rf ~/.config/nvim-AstroNvim/lua/user/
-	# ln -vsf "$THIS_REPO_PATH"/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
+	# ln -vsf "$this_dir"/AstroNvim/lua/user ~/.config/nvim-AstroNvim/lua
 
 }
 
@@ -173,7 +164,7 @@ function install_zotero_bibtex {
 	BIBTEX_VERSION=$(curl -s "https://api.github.com/repos/retorquere/zotero-better-bibtex/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 	curl -Lo "zotero-better-bibtex${BIBTEX_VERSION}.xpi" "https://github.com/retorquere/zotero-better-bibtex/releases/download/v${BIBTEX_VERSION}/zotero-better-bibtex-${BIBTEX_VERSION}.xpi"
 	mkdir -p ~/texmf/bibtex/bib
-	ln -svf "$THIS_REPO_PATH"/texmf/bst ~/texmf/bibtex
+	ln -svf "$this_dir"/texmf/bst ~/texmf/bibtex
 }
 
 function install_l {
