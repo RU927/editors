@@ -119,7 +119,9 @@ M.mason = {
 }
 
 -- git support in nvimtree
-local tree_cb = require("nvim-tree.config").nvim_tree_callback
+-- local tree_cb = require("nvim-tree.config").nvim_tree_callback
+local api = require("nvim-tree.api")
+local tree_cb = require("nvim-tree.view").is_visible
 M.nvimtree = {
 	-- auto_reload_on_write = true,
 	-- hijack_unnamed_buffer_when_opening = false,
@@ -179,7 +181,7 @@ M.nvimtree = {
 		enable = true,
 		update_cwd = true,
 		-- ignore_list = {},
-		-- update_root = true,
+		update_root = true,
 	},
 	renderer = {
 		-- add_trailing = false,
@@ -269,7 +271,7 @@ M.nvimtree = {
 		mappings = {
 			custom_only = false,
 			list = {
-				{ key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
+				-- { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
 				{ key = "h", cb = tree_cb("close_node") },
 				{ key = "v", cb = tree_cb("vsplit") },
 				{ key = "u", action = "dir_up" },

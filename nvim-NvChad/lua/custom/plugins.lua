@@ -5,6 +5,9 @@ local cmp = require("cmp")
 
 --@type NvPluginSpec[]
 local plugins = {
+
+	{},
+
 	{
 		"aspeddro/pandoc.nvim",
 		dependencies = {
@@ -171,7 +174,14 @@ local plugins = {
 
 	{
 		"nvim-tree/nvim-tree.lua",
+		-- init = function()
+		-- 	require("core.utils").load_mappings("nvimtree")
+		-- end,
 		opts = overrides.nvimtree,
+		-- config = function(_, opts)
+		-- 	dofile(vim.g.base46_cache .. "nvimtree")
+		-- 	require("nvim-tree").setup(opts)
+		-- end,
 	},
 
 	-- Install a plugin
