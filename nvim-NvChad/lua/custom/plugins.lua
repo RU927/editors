@@ -92,6 +92,8 @@ local plugins = {
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			{
+				"hrsh7th/cmp-nvim-lsp",
+
 				"hrsh7th/cmp-calc",
 				"hrsh7th/cmp-cmdline",
 				"hrsh7th/cmp-nvim-lsp-document-symbol",
@@ -149,6 +151,10 @@ local plugins = {
 				config = function()
 					require("custom.configs.null-ls").setup()
 				end,
+			},
+			{
+				"folke/neodev.nvim",
+				opts = {},
 			},
 		},
 		config = function()
