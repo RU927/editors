@@ -449,7 +449,8 @@ M.lspconfig = {
 		},
 		["<leader>if"] = {
 			function()
-				vim.lsp.buf.format({ async = true })
+				-- vim.lsp.buf.format({ async = true })
+				require("conform").format()
 			end,
 			"lsp formatting",
 		},

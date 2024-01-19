@@ -145,13 +145,13 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			-- format & linting
-			{
-				"jose-elias-alvarez/null-ls.nvim",
-				config = function()
-					require("custom.configs.null-ls").setup()
-				end,
-			},
+			-- -- format & linting
+			-- {
+			-- 	"jose-elias-alvarez/null-ls.nvim",
+			-- 	config = function()
+			-- 		require("custom.configs.null-ls").setup()
+			-- 	end,
+			-- },
 			{
 				"folke/neodev.nvim",
 				opts = {},
@@ -161,6 +161,15 @@ local plugins = {
 			require("plugins.configs.lspconfig")
 			require("custom.configs.lspconfig")
 		end, -- Override to setup mason-lspconfig
+	},
+
+	{
+		"stevearc/conform.nvim",
+		--  for users those who want auto-save conform + lazyloading!
+		-- event = "BufWritePre"
+		config = function()
+			require("custom.configs.conform")
+		end,
 	},
 
 	-- Override plugin definition options
