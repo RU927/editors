@@ -12,10 +12,18 @@ for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
 		capabilities = capabilities,
+		settings = {
+			Lua = {
+				workspace = {
+					library = {
+						["$XDG_DATA_HOME/awesome-code-doc/"] = true,
+					},
+				},
+			},
+		},
 	})
 end
 
--- lspconfig.pyright.setup { blabla}
 lspconfig.clangd.setup({
 	on_attach = on_attach,
 	capabilities = function()
