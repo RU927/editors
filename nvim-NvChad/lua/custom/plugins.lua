@@ -1,8 +1,6 @@
 local overrides = require("custom.configs.overrides")
 -- local functions = require("custom.core.functions")
 
-local cmp = require("cmp")
-
 --@type NvPluginSpec[]
 local plugins = {
 
@@ -89,36 +87,64 @@ local plugins = {
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ Events and dependencies
 	{
+		"nvim-telescope/telescope-bibtex.nvim",
+		config = function()
+			require("telescope").load_extension("bibtex")
+		end,
+	},
+
+	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
 			{
-				"hrsh7th/cmp-nvim-lsp",
+				-- "hrsh7th/cmp-nvim-lsp",
+				-- "hrsh7th/cmp-buffer",
+				-- "hrsh7th/cmp-path",
+				-- "saadparwaiz1/cmp_luasnip",
+				-- "kdheepak/cmp-latex-symbols",
 
-				"hrsh7th/cmp-calc",
-				"hrsh7th/cmp-cmdline",
-				"hrsh7th/cmp-nvim-lsp-document-symbol",
-				"hrsh7th/cmp-nvim-lsp-signature-help",
 				"jalvesaq/cmp-nvim-r",
+				-- {
+				-- 	"jalvesaq/cmp-nvim-r",
+				-- 	config = function()
+				-- 		require("custom.configs.cmp-nvim-r")
+				-- 	end,
+				-- },
+				-- "hrsh7th/cmp-calc",
+				-- "hrsh7th/cmp-cmdline",
+				-- "hrsh7th/cmp-nvim-lsp-document-symbol",
+				-- "hrsh7th/cmp-nvim-lsp-signature-help",
 				-- "hrsh7th/cmp-omni", -- helps Vimtex completions
 				"f3fora/cmp-spell",
 				"aspeddro/cmp-pandoc.nvim",
 				-- "onsails/lspkind-nvim",
 			},
 		},
-		opts = function()
-			-- local cmp = require("cmp")
-			local M = require("plugins.configs.cmp")
-			M.completion.completeopt = "menu,menuone,noselect"
-			M.mapping["<CR>"] = cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Insert,
-				select = false,
-			})
-			-- table.insert(M.sources, { overrides.cmp.sources })
-			-- table.insert(M.sources, { name = "cmp-nvim-r" })
-			-- table.insert(M.formatting, { nil }) --{ overrides.cmp.formatting })
+		-- opts = overrides.cmp,
 
-			return M
+		opts = function()
+			local cmp_conf = require("plugins.configs.cmp")
+			-- local cmp = require("cmp")
+
+			cmp_conf.formatting = overrides.cmp.formatting
+			-- cmp_conf.sources = overrides.cmp.sources
+
+			-- table.insert(cmp_conf.sources, { overrides.cmp.sources })
+			cmp_conf.completion = {
+				completeopt = "menu,menuone,noselect,noinsert",
+			}
+
+			cmp_conf.window = {
+				documentation = overrides.cmp.window.documentation,
+			}
+
+			-- table.insert(cmp_conf.window, { overrides.cmp.window.documentation })
+			--table.insert(cmp_conf.sources, { name = "cmp-nvim-r" })
+			return cmp_conf
 		end,
+
+		-- table.insert(M.sources, { overrides.cmp.sources })
+		-- table.insert(M.formatting, { nil }) --{ overrides.cmp.formatting })
 	},
 
 	-- --------------------------------------------------------------------- }}}
@@ -146,12 +172,6 @@ local plugins = {
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- -- format & linting
-			-- {
-			-- 	"jose-elias-alvarez/null-ls.nvim",
-			-- 	config = function()
-			-- 		require("custom.configs.null-ls").setup()
-			-- 	end,
-			-- },
 			{
 				"folke/neodev.nvim",
 				opts = {},

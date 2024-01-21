@@ -208,29 +208,7 @@ M.nvimtree = {
 			show = {
 				git = true,
 			},
-			glyphs = {
-				default = "",
-				symlink = "",
-				folder = {
-					arrow_open = "",
-					arrow_closed = "",
-					default = "",
-					open = "",
-					empty = "",
-					empty_open = "",
-					symlink = "",
-					symlink_open = "",
-				},
-				git = {
-					unstaged = "",
-					staged = "S",
-					unmerged = "",
-					renamed = "➜",
-					untracked = "U",
-					deleted = "",
-					ignored = "◌",
-				},
-			},
+			glyphs = Constants.icons.glyphs,
 		},
 		-- special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
 		-- symlink_destination = true,
@@ -258,25 +236,20 @@ M.nvimtree = {
 		--   min = vim.diagnostic.severity.HINT,
 		--   max = vim.diagnostic.severity.ERROR,
 		-- },
-		icons = {
-			hint = "",
-			info = "",
-			warning = "",
-			error = "",
-		},
+		icons = Constants.icons.diagnostic,
 	},
 	view = {
 		width = 30,
 		side = "left",
-		mappings = {
-			custom_only = false,
-			list = {
-				-- { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
-				{ key = "h", cb = tree_cb("close_node") },
-				{ key = "v", cb = tree_cb("vsplit") },
-				{ key = "u", action = "dir_up" },
-			},
-		},
+		-- mappings = {
+		-- 	custom_only = false,
+		-- 	list = {
+		-- 		-- { key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
+		-- 		{ key = "h", cb = tree_cb("close_node") },
+		-- 		{ key = "v", cb = tree_cb("vsplit") },
+		-- 		{ key = "u", action = "dir_up" },
+		-- 	},
+		-- },
 		-- centralize_selection = false,
 		-- --cursorline = true,
 		-- hide_root_folder = false,
@@ -338,42 +311,98 @@ M.nvimtree = {
 
 -- dofile(vim.g.base46_cache .. "cmp")
 -- local cmp_ui = require("core.utils").load_config().ui.cmp
-M.cmp = {
-	-- formatting = nil,
-	formatting = {
-		fields = { "kind", "abbr", "menu" },
-		-- mode = "symbol_text",
-		-- with_text = true,
-		format = function(_, item)
-			-- local icons = require("nvchad_ui.icons").lspkind
-			-- local icon = (cmp_ui.icons and icons[item.kind]) or ""
-			--
-			-- icon = " " .. icon .. " "
-			item.menu = {
-				buffer = "[Buffer]",
-				latex_symbols = "[Symbols]",
-				luasnip = "[Snippet]",
-				nvim_lsp = "[LSP]",
-				nvim_lua = "[Lua]",
-				path = "[Path]",
-				spell = "[Spell]",
-				cmp_nvim_r = "[R]",
-				cmdline = "[CMD]",
-				omni = "[VimTex]",
-				-- omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
-			}
-			-- item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
-			-- item.kind = icon
-			-- icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
-			-- item.kind = string.format("%s %s", icon, cmp_ui.lspkind_text and item.kind or "")
+local function border(hl_name)
+	return {
+		{ "┌", hl_name },
+		{ "─", hl_name },
+		{ "┐", hl_name },
+		{ "│", hl_name },
+		{ "┘", hl_name },
+		{ "─", hl_name },
+		{ "└", hl_name },
+		{ "│", hl_name },
+	}
+end
 
-			-- item.kind = icon
-			return item
-		end,
-	},
+local cmp_ui = require("core.utils").load_config().ui.cmp
+local cmp_style = cmp_ui.style
+local field_arrangement = {
+	atom = { "abbr", "menu", "kind" },
+	-- atom = { "abbr", "kind", "menu" },
+	-- atom = { "menu", "abbr", "kind" },
+	atom_colored = { "abbr", "menu", "kind" },
+}
+
+local formatting_style = {
+	-- default fields order i.e completion word + item.kind + item.kind icons
+	fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
+
+	format = function(_, item)
+		-- local icons = require("nvchad.icons.lspkind")
+		local icons = Constants.icons.lsp_kinds
+		local icon = (cmp_ui.icons and icons[item.kind]) or ""
+		-- local text = Constants.icons.item_menu
+		item.menu = {
+			buffer = "buffer",
+			luasnip = "snippet",
+			nvim_lsp = "lsp",
+			nvim_lua = "lua",
+			path = "path",
+			spell = "spell",
+			cmp_nvim_r = "r",
+			cmdline = "cmd",
+		}
+
+		local menu = (cmp_ui.lspkind_text and item.menu[item.menu]) or ""
+
+		-- icon = " " .. icon .. " "
+		-- menu = "[" .. item.kind .. "]"
+
+		item.menu = string.format("%s %s", menu, item.kind or "")
+		item.kind = icon
+
+		return item
+	end,
+}
+
+M.cmp = {
+	formatting = formatting_style,
+	-- formatting = {
+	-- 	fields = { "kind", "abbr", "menu" },
+	-- 	-- mode = "symbol_text",
+	-- 	-- with_text = true,
+	-- 	format = function(_, item)
+	-- 		-- local icons = require("nvchad_ui.icons").lspkind
+	-- 		-- local icon = (cmp_ui.icons and icons[item.kind]) or ""
+	-- 		--
+	-- 		-- icon = " " .. icon .. " "
+	-- 		item.menu = {
+	-- 			buffer = "[Buffer]",
+	-- 			latex_symbols = "[Symbols]",
+	-- 			luasnip = "[Snippet]",
+	-- 			nvim_lsp = "[LSP]",
+	-- 			nvim_lua = "[Lua]",
+	-- 			path = "[Path]",
+	-- 			spell = "[Spell]",
+	-- 			cmp_nvim_r = "[R]",
+	-- 			cmdline = "[CMD]",
+	-- 			omni = "[VimTex]",
+	-- 			-- omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
+	-- 		}
+	-- 		-- item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
+	-- 		-- item.kind = icon
+	-- 		-- icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
+	-- 		-- item.kind = string.format("%s %s", icon, cmp_ui.lspkind_text and item.kind or "")
+	--
+	-- 		-- item.kind = icon
+	-- 		return item
+	-- 	end,
+	-- },
 	sources = {
-		-- { name = "buffer", keyword_length = 1, max_item_count = 30 },
+		-- { name = "buffer", keyword_length = 4, max_item_count = 30 },
 		-- { name = "nvim_lsp", keyword_length = 1, max_item_count = 30 },
+		-- { name = "nvim_lsp" },
+		-- { name = "nvim_lua" },
 		-- { name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
 		-- { name = "luasnip", keyword_length = 3, max_item_count = 30 },
 		-- { name = "path", keyword_length = 1, max_item_count = 30 },
@@ -387,7 +416,7 @@ M.cmp = {
 		-- 	option = { cache = true }, -- avoids reloading each time
 		-- },
 		-- { name = "nvim_lsp_signature_help", keyword_length = 2, max_item_count = 30 },
-		-- { name = "cmp_nvim_r", filetype = { "r" } },
+		-- { name = "cmp_nvim_r", keyword_length = 1, max_item_count = 30, filetype = { "r" } },
 		{ name = "cmp_nvim_r" },
 		-- {
 		-- 	name = "spell",
@@ -401,6 +430,14 @@ M.cmp = {
 		-- 	},
 		-- },
 	},
+
+	window = {
+		documentation = {
+			border = border("CmpDocBorder"),
+			winhighlight = "Normal:CmpDoc",
+		},
+	},
+
 	--]]
 }
 
