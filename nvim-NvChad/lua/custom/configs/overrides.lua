@@ -399,14 +399,14 @@ M.cmp = {
 	-- 	end,
 	-- },
 	sources = {
-		-- { name = "buffer", keyword_length = 4, max_item_count = 30 },
-		-- { name = "nvim_lsp", keyword_length = 1, max_item_count = 30 },
+		{ name = "buffer", keyword_length = 4, max_item_count = 30 },
+		{ name = "nvim_lsp", keyword_length = 2, max_item_count = 30 },
 		-- { name = "nvim_lsp" },
 		-- { name = "nvim_lua" },
 		-- { name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
-		-- { name = "luasnip", keyword_length = 3, max_item_count = 30 },
-		-- { name = "path", keyword_length = 1, max_item_count = 30 },
-		-- { name = "calc", keyword_length = 2, max_item_count = 30 },
+		{ name = "luasnip", keyword_length = 3, max_item_count = 30 },
+		{ name = "path", keyword_length = 1, max_item_count = 30 },
+		{ name = "calc", keyword_length = 2, max_item_count = 30 },
 		-- { name = "latex_symbols", keyword_length = 1, max_item_count = 30 },
 		-- {
 		-- 	name = "latex_symbols",
@@ -416,8 +416,8 @@ M.cmp = {
 		-- 	option = { cache = true }, -- avoids reloading each time
 		-- },
 		-- { name = "nvim_lsp_signature_help", keyword_length = 2, max_item_count = 30 },
-		-- { name = "cmp_nvim_r", keyword_length = 1, max_item_count = 30, filetype = { "r" } },
-		{ name = "cmp_nvim_r" },
+		{ name = "cmp_nvim_r", keyword_length = 1, max_item_count = 30, filetype = { "r" } },
+		-- { name = "cmp_nvim_r" },
 		-- {
 		-- 	name = "spell",
 		-- 	keyword_length = 5,

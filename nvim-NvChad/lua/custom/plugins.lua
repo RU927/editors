@@ -101,7 +101,7 @@ local plugins = {
 				-- "hrsh7th/cmp-buffer",
 				-- "hrsh7th/cmp-path",
 				-- "saadparwaiz1/cmp_luasnip",
-				-- "kdheepak/cmp-latex-symbols",
+				"kdheepak/cmp-latex-symbols",
 
 				"jalvesaq/cmp-nvim-r",
 				-- {
@@ -118,31 +118,32 @@ local plugins = {
 				"f3fora/cmp-spell",
 				"aspeddro/cmp-pandoc.nvim",
 				-- "onsails/lspkind-nvim",
+				-- "roobert/tailwindcss-colorizer-cmp.nvim",
 			},
 		},
 		-- opts = overrides.cmp,
 
-		opts = function()
-			local cmp_conf = require("plugins.configs.cmp")
-			-- local cmp = require("cmp")
-
-			cmp_conf.formatting = overrides.cmp.formatting
-			-- cmp_conf.sources = overrides.cmp.sources
-
-			-- table.insert(cmp_conf.sources, { overrides.cmp.sources })
-			cmp_conf.completion = {
+		opts = function(_, opts)
+			-- local cmp_conf = require("plugins.configs.cmp")
+			-- local format_kinds = opts.formatting.format
+			-- opts.formatting.format = function(entry, item)
+			-- 	format_kinds(entry, item)
+			-- 	return overrides.cmp.formatting.format(_, item)
+			-- 	-- return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+			-- end
+			opts.formatting = overrides.cmp.formatting
+			opts.sources = overrides.cmp.sources
+			-- table.insert(opts.sources, { overrides.cmp.sources })
+			opts.completion = {
 				completeopt = "menu,menuone,noselect,noinsert",
 			}
-
-			cmp_conf.window = {
+			opts.window = {
 				documentation = overrides.cmp.window.documentation,
 			}
-
-			-- table.insert(cmp_conf.window, { overrides.cmp.window.documentation })
-			--table.insert(cmp_conf.sources, { name = "cmp-nvim-r" })
-			return cmp_conf
+			-- return opts
 		end,
 
+		--table.insert(cmp_conf.sources, { name = "cmp-nvim-r" })
 		-- table.insert(M.sources, { overrides.cmp.sources })
 		-- table.insert(M.formatting, { nil }) --{ overrides.cmp.formatting })
 	},
