@@ -150,14 +150,26 @@ local plugins = {
 
 	-- --------------------------------------------------------------------- }}}
 	-- {{{ vimtex
+
 	{
 		"lervag/vimtex",
 		ft = { "tex", "texx" },
-		dependencies = { "Traap/vim-bundle-vimtex" },
+		dependencies = { "micangl/cmp-vimtex" },
+		version = "*",
+		-- event = { "BufReadPre", "BufNewFile" },       -- WARNING: adding events can prevent synctex inverse search from working
 		config = function()
 			require("custom.configs.vimtex")
 		end,
 	},
+
+	-- {
+	-- 	"lervag/vimtex",
+	-- 	ft = { "tex", "texx" },
+	-- 	dependencies = { "Traap/vim-bundle-vimtex" },
+	-- 	config = function()
+	-- 		require("custom.configs.vimtex")
+	-- 	end,
+	-- },
 
 	-- ----------------------------------------------------------------------- }}}
 	-- {{{ which-key
