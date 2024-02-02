@@ -142,7 +142,7 @@ function install_latex {
 	echo -e "\u001b[7m Installing latex \u001b[0m"
 	sudo apt install texlive
 	sudo apt-get install texlive-doc-ru
-	sudo apt-get install texlive-lang-cyrillic
+	sudo apt-get install texlive-lang-cyrillic texlive-extra-utils texlive-latex-recommended texlive-fonts-extra-links texlive-fonts-recommended fragmaster texlive-fonts-extra texlive-xetex texlive-science texlive-publishers texlive-metapost texlive-lang-english
 	# sudo apt install texlive-latex-extra
 	# sudo apt install texlive-full
 	# latexmk --version
