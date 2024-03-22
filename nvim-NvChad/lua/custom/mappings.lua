@@ -524,14 +524,14 @@ M.sessionManager = {
 }
 -- ------------------------------------------------------------------------- }}}
 -- {{{ p -
---[[
-M.= {
+---[[
+M.translate= {
+-- vim.keymap.set("x", "<leader>tr", pantran.motion_translate, opts)
 	n = {
-		["<leader>p"] = { "<cmd>    <cr>", "" },
-		["<leader>p"] = { "<cmd>    <cr>", "" },
-		["<leader>p"] = { "<cmd>    <cr>", "" },
-		["<leader>p"] = { "<cmd>    <cr>", "" },
-		["<leader>p"] = { "<cmd>    <cr>", "" },
+		["tr"] = { "<cmd>Pantran<cr>", "translate" },
+	},
+	v = {
+		["tr"] = { "<cmd>'<,'>Pantran<cr>", "translate" },
 	},
 }
 --]]
@@ -540,34 +540,34 @@ M.= {
 ---[[
 -- TODO:  Decide whether or not to keep these duplicate commands.
 -- if Is_Enabled("vim-tmux-runner") then
-M.terminals = {
-	-- plugin = true,
-	n = {
-		-- name = "",
-		["<leader>tC"] = { "<cmd>VtrClearRunner<cr>", "" },
-		["<leader>tF"] = { "<cmd>VtrFocusRunner<cr>", "" },
-		["<leader>tR"] = { "<cmd>VtrReorientRunner<cr>", "" },
-		["<leader>tr"] = { "<cmd>VtrResizeRunner<cr>", "" },
-		["<leader>ta"] = { "<cmd>VtrReattachRunner<cr>", "" },
-		["<leader>tc"] = { "<cmd>VtrFlushCommand<cr>", "" },
-		["<leader>tf"] = { "<cmd>VtrSendFile!<cr>", "" },
-		["<leader>tk"] = { "<cmd>VtrKillRunner<cr>", "" },
-		["<leader>tl"] = { "<cmd>VtrSendLinesToRunner<cr>", "" },
-		["<leader>to"] = { "<cmd>VtrOpenRunner<cr>", "" },
-		["<leader>ts"] = { "<cmd>VtrSendCommandToRunner<cr>", "" },
-		-- end
-
-		-- if Is_Enabled("toggleterm.nvim") then
-		-- ["<Bslash><Bslash>"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "New terminal" },
-		["<leader>Tf"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "" },
-		["<leader>Tl"] = { "<cmd>lua Customize.toggleterm.lazygit()<cr>", "" },
-		["<leader>Tm"] = { "<cmd>lua Customize.toggleterm.neomutt()<cr>", "" },
-		-- ["<leader>r"] = { "<cmd>lua Customize.toggleterm.ranger()<cr>", "ranger" },
-		-- ["<leader>r"] = { "<cmd>RnvimrToggle<CR>", "ranger" },
-		-- ["<A-r>"] = { "<cmd>RnvimrToggle<CR>", "ranger" },
-		-- end
-	},
-}
+-- M.terminals = {
+-- 	-- plugin = true,
+-- 	n = {
+-- 		-- name = "",
+-- 		["<leader>tC"] = { "<cmd>VtrClearRunner<cr>", "" },
+-- 		["<leader>tF"] = { "<cmd>VtrFocusRunner<cr>", "" },
+-- 		["<leader>tR"] = { "<cmd>VtrReorientRunner<cr>", "" },
+-- 		["<leader>tr"] = { "<cmd>VtrResizeRunner<cr>", "" },
+-- 		["<leader>ta"] = { "<cmd>VtrReattachRunner<cr>", "" },
+-- 		["<leader>tc"] = { "<cmd>VtrFlushCommand<cr>", "" },
+-- 		["<leader>tf"] = { "<cmd>VtrSendFile!<cr>", "" },
+-- 		["<leader>tk"] = { "<cmd>VtrKillRunner<cr>", "" },
+-- 		["<leader>tl"] = { "<cmd>VtrSendLinesToRunner<cr>", "" },
+-- 		["<leader>to"] = { "<cmd>VtrOpenRunner<cr>", "" },
+-- 		["<leader>ts"] = { "<cmd>VtrSendCommandToRunner<cr>", "" },
+-- 		-- end
+--
+-- 		-- if Is_Enabled("toggleterm.nvim") then
+-- 		-- ["<Bslash><Bslash>"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "New terminal" },
+-- 		["<leader>Tf"] = { "<cmd>lua Customize.toggleterm.float()<cr>", "" },
+-- 		["<leader>Tl"] = { "<cmd>lua Customize.toggleterm.lazygit()<cr>", "" },
+-- 		["<leader>Tm"] = { "<cmd>lua Customize.toggleterm.neomutt()<cr>", "" },
+-- 		-- ["<leader>r"] = { "<cmd>lua Customize.toggleterm.ranger()<cr>", "ranger" },
+-- 		-- ["<leader>r"] = { "<cmd>RnvimrToggle<CR>", "ranger" },
+-- 		-- ["<A-r>"] = { "<cmd>RnvimrToggle<CR>", "ranger" },
+-- 		-- end
+-- 	},
+-- }
 --]]
 ---[[
 M.nvterm = {

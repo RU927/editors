@@ -5,6 +5,13 @@ local overrides = require("custom.configs.overrides")
 local plugins = {
 
 	{},
+  {
+    "potamides/pantran.nvim",
+		lazy = false,
+		config = function()
+			require("custom.configs.pantran")
+		end,
+  },
 
 	{
 		"aspeddro/pandoc.nvim",
