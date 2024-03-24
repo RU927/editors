@@ -329,7 +329,9 @@ local field_arrangement = {
 	-- atom = { "abbr", "kind", "menu" },
 	-- atom = { "menu", "abbr", "kind" },
 	atom_colored = { "abbr", "menu", "kind" },
-}local formatting_style = {
+}
+
+local formatting_style = {
 	-- default fields order i.e completion word + item.kind + item.kind icons
 	fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
@@ -345,7 +347,7 @@ local field_arrangement = {
 			nvim_lua = "lua",
 			path = "path",
 			spell = "spell",
-			cmp_nvim_r = "r",
+			cmp_r = "r",
 			cmdline = "cmd",
 		}
 
@@ -360,6 +362,7 @@ local field_arrangement = {
 		return item
 	end,
 }
+
 M.cmp = {
 	formatting = formatting_style,
 	-- formatting = {
@@ -379,7 +382,7 @@ M.cmp = {
 	-- 			nvim_lua = "[Lua]",
 	-- 			path = "[Path]",
 	-- 			spell = "[Spell]",
-	-- 			cmp_nvim_r = "[R]",
+	-- 			cmp_r = "[R]",
 	-- 			cmdline = "[CMD]",
 	-- 			omni = "[VimTex]",
 	-- 			-- omni = (vim.inspect(vim_item.menu):gsub('%"', "")),
@@ -394,14 +397,14 @@ M.cmp = {
 	-- 	end,
 	-- },
 	sources = {
-		{ name = "buffer", keyword_length = 4, max_item_count = 30 },
-		{ name = "nvim_lsp", keyword_length = 2, max_item_count = 30 },
+		-- { name = "buffer", keyword_length = 4, max_item_count = 30 },
+		-- { name = "nvim_lsp", keyword_length = 2, max_item_count = 30 },
 		-- { name = "nvim_lsp" },
 		-- { name = "nvim_lua" },
 		-- { name = "nvim_lua", keyword_length = 1, max_item_count = 30 },
-		{ name = "luasnip", keyword_length = 3, max_item_count = 30 },
-		{ name = "path", keyword_length = 1, max_item_count = 30 },
-		{ name = "calc", keyword_length = 2, max_item_count = 30 },
+		-- { name = "luasnip", keyword_length = 3, max_item_count = 30 },
+		-- { name = "path", keyword_length = 1, max_item_count = 30 },
+		-- { name = "calc", keyword_length = 2, max_item_count = 30 },
 		-- { name = "latex_symbols", keyword_length = 1, max_item_count = 30 },
 		-- {
 		-- 	name = "latex_symbols",
@@ -411,8 +414,8 @@ M.cmp = {
 		-- 	option = { cache = true }, -- avoids reloading each time
 		-- },
 		-- { name = "nvim_lsp_signature_help", keyword_length = 2, max_item_count = 30 },
-		{ name = "cmp_nvim_r", keyword_length = 1, max_item_count = 30, filetype = { "r" } },
-		-- { name = "cmp_nvim_r" },
+		{ name = "cmp_r", keyword_length = 1, max_item_count = 30, filetype = { "r" } },
+		-- { name = "cmp_r" },
 		-- {
 		-- 	name = "spell",
 		-- 	keyword_length = 5,
