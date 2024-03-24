@@ -1,0 +1,452 @@
+require "nvchad.mappings"
+-- n, v, i, t = mode names
+-- require("mapps_disable")
+
+local map = vim.keymap.set
+
+map("i", "<C-b>", "<ESC>^i", { desc = "Move Beginning of line" })
+map("i", "<C-e>", "<End>", { desc = "Move End of line" })
+map("i", "<C-h>", "<Left>", { desc = "Move Left" })
+map("i", "<C-l>", "<Right>", { desc = "Move Right" })
+map("i", "<C-j>", "<Down>", { desc = "Move Down" })
+map("i", "<C-k>", "<Up>", { desc = "Move Up" })
+
+map("n", "<Esc>", "<cmd>noh<CR>", { desc = "General Clear highlights" })
+
+map("n", "<C-h>", "<C-w>h", { desc = "Switch Window left" })
+map("n", "<C-l>", "<C-w>l", { desc = "Switch Window right" })
+map("n", "<C-j>", "<C-w>j", { desc = "Switch Window down" })
+map("n", "<C-k>", "<C-w>k", { desc = "Switch Window up" })
+
+map("n", "<C-s>", "<cmd>w<CR>", { desc = "File Save" })
+map("n", "<C-c>", "<cmd>%y+<CR>", { desc = "File Copy whole" })
+
+map("n", "<leader>n", "<cmd>set nu!<CR>", { desc = "Toggle Line number" })
+map("n", "<leader>rn", "<cmd>set rnu!<CR>", { desc = "Toggle Relative number" })
+map("n", "<leader>ch", "<cmd>NvCheatsheet<CR>", { desc = "Toggle NvCheatsheet" })
+
+map("n", "<leader>fm", function()
+  require("conform").format { lsp_fallback = true }
+end, { desc = "Format Files" })
+
+-- global lsp mappings
+map("n", "<leader>lf", vim.diagnostic.open_float, { desc = "Lsp floating diagnostics" })
+map("n", "[d", vim.diagnostic.goto_prev, { desc = "Lsp prev diagnostic" })
+map("n", "]d", vim.diagnostic.goto_next, { desc = "Lsp next diagnostic" })
+map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Lsp diagnostic loclist" })
+
+-- tabufline
+map("n", "<leader>b", "<cmd>enew<CR>", { desc = "Buffer New" })
+
+map("n", "<tab>", function()
+  require("nvchad.tabufline").next()
+end, { desc = "Buffer Goto next" })
+
+map("n", "<S-tab>", function()
+  require("nvchad.tabufline").prev()
+end, { desc = "Buffer Goto prev" })
+
+map("n", "<leader>x", function()
+  require("nvchad.tabufline").close_buffer()
+end, { desc = "Buffer Close" })
+
+-- Comment
+map("n", "<leader>/", function()
+  require("Comment.api").toggle.linewise.current()
+end, { desc = "Comment Toggle" })
+
+map(
+  "v",
+  "<leader>/",
+  "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
+  { desc = "Comment Toggle" }
+)
+
+-- nvimtree
+map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Nvimtree Toggle window" })
+map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Nvimtree Focus window" })
+
+-- telescope
+map("n", "<leader>fw", "<cmd>Telescope live_grep<CR>", { desc = "Telescope Live grep" })
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { desc = "Telescope Find buffers" })
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { desc = "Telescope Help page" })
+
+map("n", "<leader>fo", "<cmd>Telescope oldfiles<CR>", { desc = "Telescope Find oldfiles" })
+map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "Telescope Find in current buffer" })
+map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "Telescope Git commits" })
+map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "Telescope Git status" })
+map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "Telescope Pick hidden term" })
+map("n", "<leader>th", "<cmd>Telescope themes<CR>", { desc = "Telescope Nvchad themes" })
+map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Telescope Find files" })
+map(
+  "n",
+  "<leader>fa",
+  "<cmd>Telescope find_files follow=true no_ignore=true hidden=true<CR>",
+  { desc = "Telescope Find all files" }
+)
+
+-- terminal
+map("t", "<C-x>", "<C-\\><C-N>", { desc = "Terminal Escape terminal mode" })
+
+-- new terminals
+map("n", "<leader>h", function()
+  require("nvchad.term").new { pos = "sp", size = 0.3 }
+end, { desc = "Terminal New horizontal term" })
+
+map("n", "<leader>v", function()
+  require("nvchad.term").new { pos = "vsp", size = 0.3 }
+end, { desc = "Terminal New vertical window" })
+
+-- toggleable
+map({ "n", "t" }, "<A-v>", function()
+  require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm", size = 0.3 }
+end, { desc = "Terminal Toggleable vertical term" })
+
+map({ "n", "t" }, "<A-h>", function()
+  require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm", size = 0.3 }
+end, { desc = "Terminal New horizontal term" })
+
+map({ "n", "t" }, "<A-i>", function()
+  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+end, { desc = "Terminal Toggle Floating term" })
+
+map("t", "<ESC>", function()
+  local win = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_close(win, true)
+end, { desc = "Terminal Close term in terminal mode" })
+
+-- whichkey
+map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "Whichkey all keymaps" })
+
+map("n", "<leader>wk", function()
+  vim.cmd("WhichKey " .. vim.fn.input "WhichKey: ")
+end, { desc = "Whichkey query lookup" })
+
+-- blankline
+map("n", "<leader>cc", function()
+  local config = { scope = {} }
+  config.scope.exclude = { language = {}, node_type = {} }
+  config.scope.include = { node_type = {} }
+  local node = require("ibl.scope").get(vim.api.nvim_get_current_buf(), config)
+
+  if node then
+    local start_row, _, end_row, _ = node:range()
+    if start_row ~= end_row then
+      vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start_row + 1, 0 })
+      vim.api.nvim_feedkeys("_", "n", true)
+    end
+  end
+end, { desc = "Blankline Jump to current context" })
+
+map("n", "<leader>rr", "<cmd> RnvimrToggle <CR>", { desc = "ranger" })
+
+map("n", "<leader>u", "<cmd> UndotreeToggle <CR>", { desc = "toggle undotree" })
+
+map("i", "jk", "<escape>", { desc = "quit insert mode" })
+map("i", "kj", "<escape>", { desc = "quit insert mode" })
+
+-- Copy all
+map("n", "<C-y>", "<cmd> %y+ <CR>",{ desc = "copy whole file" })
+-- line numbers
+-- map("n", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"',{ desc = "move down" })
+-- map("n", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"',{ desc = "move up" })
+-- map("n", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"',{ desc = "move up" })
+-- map("n", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"',{ desc = "move down" })
+map("n", "wq", ":wq<cr>",{ desc = "write and quit" })
+map("n", "qq", ":q<cr>",{ desc = "quit" })
+-- Bdelete
+map("n", "<leader>d", ":bd!<CR>",{ desc = "close buffer" })
+-- Navigate buffers
+map("n", "<S-l>", ":bnext<CR>",{ desc = "buffer next" })
+map("n", "<S-h>", ":bprevious<CR>",{ desc = "buffer prev" })
+-- Move text up and down
+map("n", "<A-j>", "<Esc>:m .+1<CR>==gi",{ desc = "change with down string" })
+map("n", "<A-k>", "<Esc>:m .-2<CR>==gi",{ desc = "change with up string" })
+-- Resize with arrows
+map("n", "<C-Up>", ":resize -2<CR>",{ desc = "resize up" })
+map("n", "<C-Down>", ":resize +2<CR>",{ desc = "resize down" })
+map("n", "<C-Left>", ":vertical resize +2<CR>",{ desc = "resize left" })
+map("n", "<C-Right>", ":vertical resize -2<CR>",{ desc = "resize right" })
+
+map("n", "zv", "zMzvzz",{ desc = "" })
+-- Close current fold when open. Always open next fold.
+map("n", "zj", "zcjzOzz",{ desc = "" })
+-- Close current fold when open. Always open previous fold.
+map("n", "zk", "zckzOzz",{ desc = "" })
+
+map("t", "<C-x>", vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true),{ desc = "escape terminal mode" })
+map("t", "<Esc><Esc>", "<C-\\><C-n>",{ desc = "" })
+map("t", "<C-h>", "<c-\\><c-n><c-w>h",{ desc = "" })
+map("t", "<C-j>", "<c-\\><c-n><c-w>j",{ desc = "" })
+map("t", "<C-k>", "<c-\\><c-n><c-w>k",{ desc = "" })
+map("t", "<C-l>", "<c-\\><c-n><c-w>l",{ desc = "" })
+-- map("v", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"',{ desc = "move up" })
+-- map("v", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"',{ desc = "move down" })
+-- tabulation
+map("v", "<", "<gv",{ desc = "tab del" })
+map("v", ">", ">gv",{ desc = "tab add" })
+-- Move text up and down
+map("v", "<A-j>", ":m .+1<CR>==",{ desc = "move down string" })
+map("v", "<A-k>", ":m .-2<CR>==",{ desc = "move up string" })
+map("v", "P", '"_dP',{ desc = "" })
+map("v", "p", '"_dp',{ desc = "" })
+-- map("x", "j", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"',{ desc = "move down" })
+-- map("x", "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"',{ desc = "move up" })
+-- Don't copy the replaced text after pasting in visual mode
+-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
+map("x", "p", 'p:let @+=@0<CR>:let @"=@0<CR>',{ desc = "dont copy replaced text" })
+--Move text up and down
+map("x", "J", ":move '>+1<CR>gv-gv",{ desc = "" })
+map("x", "K", ":move '<-2<CR>gv-gv",{ desc = "" })
+map("x", "<A-j>", ":move '>+1<CR>gv-gv",{ desc = "move down" })
+map("x", "<A-k>", ":move '<-2<CR>gv-gv",{ desc = "move up" })
+
+
+map("n", "<leader>dw", "<cmd>terminal pandoc %:p -o %:p:r.docx<CR>",{ desc = "word" })
+map("n", "<leader>dm", "<cmd>terminal pandoc %:p -o %:p:r.md<CR>",{ desc = "markdown" })
+map("n", "<leader>dh", "<cmd>terminal pandoc %:p -o %:p:r.html<CR>",{ desc = "html" })
+map("n", "<leader>dl", "<cmd>terminal pandoc %:p -o %:p:r.tex<CR>",{ desc = "latex" })
+map("n", "<leader>dp", "<cmd>terminal pandoc %:p -o %:p:r.pdf<CR>",{ desc = "pdf" })
+-- x = { "<cmd>echo "run: unoconv -f pdf path-to.docx""  , "word to pdf"})
+--ben
+map("n", "<leader>fc", "<cmd>Telescope bibtex<CR>",{ desc = "citations" })
+-- map("n", "<leader>fp", "<cmd>Telescope live_grep theme=ivy<CR>",{ desc = "project" })
+map("n", "<leader>fk", "<cmd>Telescope keymaps<CR>",{ desc = "keymaps" })
+map("n", "<leader>fm", "<cmd>Telescope man_pages<CR>",{ desc = "man pages" })
+map("n", "<leader>fr", "<cmd>Telescope registers<CR>",{ desc = "registers" })
+map("n", "<leader>fC", "<cmd>Telescope commands<CR>",{ desc = "commands" })
+-- pick a hidden term
+map("n", "<leader>fF", "<cmd>Telescope media_files<cr>",{ desc = "" })
+map("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>",{ desc = "" })
+map("n", "<leader>fi",
+	"<cmd>lua require('telescope').extensions.media_files.media_files()<cr>",{ desc =
+	"media files",
+})
+map("n", "<leader>fl", "<cmd>Telescope resume<cr>",{ desc = "resume" })
+map("n", "<leader>fw", "<cmd>Telescope grep_string<cr>",{ desc = "grep string" })
+-- git
+map("n", "<leader>gb", "<cmd>Telescope git_branches<CR>",{ desc = "checkout branch" })
+--gitsigns
+map("n", "<leader>gg",  "<cmd>lua _LAZYGIT_TOGGLE()<CR>",{ desc = "lazygit" })
+map("n", "<leader>gd",  "<cmd>Gitsigns diffthis HEAD<CR>",{ desc = "diff" })
+map("n", "<leader>gz",  "<cmd>lua require 'gitsigns'.reset_buffer()<cr>",{ desc = "reset buffer" })
+--[[ 
+-- if Is_Enabled("vim-fugitive") then
+map("n", "<leader>gP",  "<cmd>G pull<cr>",{ desc = "Git pull" })
+map("n", "<leader>gc",  "<cmd>G commmit<cr>",{ desc = "Git commit" })
+map("n", "<leader>gd",  "<cmd>G diff<cr>",{ desc = "Git diff" })
+map("n", "<leader>gl",  "<cmd>G log<cr>",{ desc = "Git log" })
+map("n", "<leader>gh",  "<cmd>vert bo help fugitive<cr>",{ desc = "" })
+map("n", "<leader>gp",  "<cmd>G push<cr>",{ desc = "Git push" })
+map("n", "<leader>gs",  "<cmd>G<cr>",{ desc = "" })
+-- end
+--]]
+-- Navigation through hunks
+map("n", "]c", 
+	function()
+		if vim.wo.diff then
+			return "]c"
+		end
+		vim.schedule(function()
+			require("gitsigns").next_hunk()
+		end)
+		return "<Ignore>"
+	end,{ desc =
+	"Jump to next hunk",
+	})
+map("n", "[c",
+	function()
+		if vim.wo.diff then
+			return "[c"
+		end
+		vim.schedule(function()
+			require("gitsigns").prev_hunk()
+		end)
+		return "<Ignore>"
+	end,{ desc =
+	"Jump to prev hunk",
+	})
+-- Actions
+-- map("n", "<leader>ghs",  "<cmd>lua require 'gitsigns'.stage_hunk()<CR>",{ desc = "stage hunk" })
+-- map("n", "<leader>ghu", 
+-- "<cmd>lua require 'gitsigns'.undo_stage_hunk()<CR>",{ desc =
+-- "unstage hunk"})
+map("n", "<leader>ghr", 
+	function()
+		require("gitsigns").reset_hunk()
+	end,{ desc =
+	"Reset hunk",
+})
+map("n", "<leader>ghp", 
+	function()
+		require("gitsigns").preview_hunk()
+	end,{ desc =
+	"Preview hunk",
+})
+map("n", "<leader>gb", 
+	function()
+		package.loaded.gitsigns.blame_line()
+	end,{ desc =
+	"Blame line",
+})
+map("n", "<leader>gt", 
+	function()
+		require("gitsigns").toggle_deleted()
+	end,{ desc =
+	"Toggle deleted",
+})
+
+-- ------------------------------------------------------------------------- }}}
+--lsp
+map("n", "<leader>ii", "<cmd>LspInfo<cr>",{ desc = "lsp info" })
+-- LuaSnipUnlinkCurrent
+map("n", "<leader>iu", "<cmd>LuaSnipUnlinkCurrent<cr>",{ desc = "snip unlink" })
+-- SymoblsOutline
+-- map("n", "<leader>io", "<cmd>SymbolsOutline<cr>",{ desc = "" })
+-- -- Trouble
+-- map("n", "<leader>iR", "<cmd>TroubleToggle lsp_references<cr>",{ desc = "" })
+-- map("n", "<leader>id", "<cmd>TroubleToggle<cr>",{ desc = "" })
+-- vim.diagnostic
+-- vim.lsp
+map("n", "<leader>il", "<cmd>lua vim.lsp.codelens.run()<cr>",{ desc = "lsp codelens" })
+map("n", "gD",
+	function()
+		vim.lsp.buf.declaration()
+	end,{ desc =
+	"lsp declaration",
+})
+map("n", "gd",
+	function()
+		vim.lsp.buf.definition()
+	end,{ desc =
+	"lsp definition",
+})
+map("n", "K",
+	function()
+		vim.lsp.buf.hover()
+	end,{ desc =
+	"lsp hover",
+})
+map("n", "gi",
+	function()
+		vim.lsp.buf.implementation()
+	end,{ desc =
+	"lsp implementation",
+})
+map("n", "<leader>is",
+	function()
+		vim.lsp.buf.signature_help()
+	end,{ desc =
+	"lsp signature_help",
+})
+map("n", "<leader>iD",
+	function()
+		vim.lsp.buf.type_definition()
+	end,{ desc =
+	"lsp definition type",
+})
+map("n", "<leader>ir",
+	function()
+		require("nvchad_ui.renamer").open()
+	end,{ desc =
+	"lsp rename",
+})
+map("n", "<leader>ia",
+	function()
+		vim.lsp.buf.code_action()
+	end,{ desc =
+	"lsp code_action",
+})
+map("n", "gr",
+	function()
+		vim.lsp.buf.references()
+	end,{ desc =
+	"lsp references",
+})
+map("n", "<leader>id",
+	function()
+		vim.diagnostic.open_float({ border = "rounded" })
+	end,{ desc =
+	"floating diagnostic",
+})
+map("n", "[d",
+	function()
+		vim.diagnostic.goto_prev()
+	end,{ desc =
+	"goto prev",
+})
+map("n", "]d",
+	function()
+		vim.diagnostic.goto_next()
+	end,{ desc =
+	"goto_next",
+})
+map("n", "<leader>iq",
+	function()
+		vim.diagnostic.setloclist()
+	end,{ desc =
+	"diagnostic setloclist",
+})
+map("n", "<leader>if",
+	function()
+		-- vim.lsp.buf.format({ async = true })
+		require("conform").format()
+	end,{ desc =
+	"lsp formatting",
+})
+map("n", "<leader>iwa",
+	function()
+		vim.lsp.buf.add_workspace_folder()
+	end,{ desc =
+	"add workspace folder",
+})
+map("n", "<leader>iwr",
+	function()
+		vim.lsp.buf.remove_workspace_folder()
+	end,{ desc =
+	"remove workspace folder",
+})
+map("n", "<leader>iwl",
+	function()
+		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+	end,{ desc =
+	"list workspace folders",
+})
+
+-- ------------------------------------------------------------------------- }}}
+-- latex
+
+map("n", "<leader>lb", "<cmd>VimtexCompile<CR>",{ desc = "build" })
+map("n", "<leader>lc", "<cmd>VimtexCountWords!<CR>",{ desc = "count" })
+map("n", "<leader>li", "<cmd>VimtexTocOpen<CR>",{ desc = "index" })
+map("n", "<leader>lv", "<cmd>VimtexView<CR>",{ desc = "view" })
+--[[
+if Is_Enabled("vimtex") then
+map("n", "<leader>lC", "<Plug>(vimtex-clean-full)",{ desc = "" })
+map("n", "<leader>lG", "<Plug>(vimtex-status-all)",{ desc = "" })
+map("n", "<leader>lI", "<Plug>(vimtex-info-full)",{ desc = "" })
+map("n", "<leader>lK", "<Plug>(vimtex-stop-all)",{ desc = "" })
+map("n", "<leader>lL", "<Plug>(vimtex-compile-selected)",{ desc = "" })
+map("n", "<leader>lT", "<Plug>(vimtex-toc-toggle)",{ desc = "" })
+map("n", "<leader>lX", "<Plug>(vimtex-reload-state)",{ desc = "" })
+map("n", "<leader>la", "<Plug>(vimtex-context-menu)",{ desc = "" })
+map("n", "<leader>lc", "<Plug>(vimtex-clean-full)",{ desc = "" })
+map("n", "<leader>le", "<Plug>(vimtex-error)",{ desc = "" })
+map("n", "<leader>lg", "<Plug>(vimtex-status)",{ desc = "" })
+map("n", "<leader>li", "<Plug>(vimtex-info)",{ desc = "" })
+map("n", "<leader>lk", "<Plug>(vimtex-stop)",{ desc = "" })
+map("n", "<leader>ll", "<Plug>(vimtex-compile)",{ desc = "" })
+map("n", "<leader>lm", "<Plug>(vimtex-impas-list)",{ desc = "" })
+map("n", "<leader>lo", "<Plug>(vimtex-compile-output)",{ desc = "" })
+map("n", "<leader>lq", "<Plug>(vimtex-log)",{ desc = "" })
+map("n", "<leader>ls", "<Plug>(vimtex-toggle-main)",{ desc = "" })
+map("n", "<leader>lt", "<Plug>(vimtex-toc_open)",{ desc = "" })
+map("n", "<leader>lv", "<Plug>(vimtex-view)",{ desc = "" })
+map("n", "<leader>lx", "<Plug>(vimtex-reload)",{ desc = "" })
+end
+--]]
+
+--translate
+-- vim.keymap.set("x", "<leader>tr", pantran.motion_translate, opts)
+map("n", "tr", "<cmd>Pantran<cr>",{ desc = "translate" })
+map("v", "tr", "<cmd>'<,'>Pantran<cr>",{ desc = "translate" })
