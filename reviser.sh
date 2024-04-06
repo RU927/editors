@@ -52,12 +52,14 @@ checkEnv() {
 checkEnv
 
 function install_packages {
-	DEPENDENCIES='\
-  latexmk zathura \
-  '
+	DEPENDENCIES=(
+		zathura zathura-pdf-poppler zathura-djvu zathura-ps zathura-cb libreoffice-writer libreoffice-l10n-ru
+		pandoc pandoc-citeproc
+		latexmk
+	)
 
 	echo -e "${YELLOW}Installing required packages...${RC}"
-	sudo "${PACKAGER}" install -yq "${DEPENDENCIES}"
+	sudo "${PACKAGER}" install -yq "${DEPENDENCIES[@]}"
 }
 
 # перед создание линков делает бекапы только тех пользовательских конфикураций,
@@ -188,7 +190,7 @@ if [ "$1" = "--backsym" ] || [ "$1" = "-b" ]; then
 	back_sym
 	exit 0
 fi
-if [ "$1" = "--all" -o "$1" = "-a" ]; then
+if [ "$1" = "--all" ] || [ "$1" = "-a" ]; then
 	all
 	exit 0
 fi
