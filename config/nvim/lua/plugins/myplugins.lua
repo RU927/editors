@@ -3,8 +3,18 @@ local overrides = require "configs.overrides"
 
 --@type NvPluginSpec[]
 local plugins = {
-
   {},
+  {
+    "ms-jpq/coq_nvim",
+    lazy = false,
+    dependencies = {
+      "ms-jpq/coq.thirdparty",
+      -- "ms-jpq/coq.artifacts",
+    },
+    -- config = function()
+    --   require("coq").setup()
+    -- end,
+  },
   {
     "potamides/pantran.nvim",
     lazy = false,
