@@ -9,7 +9,7 @@ YELLOW='\e[33m'
 RV='\u001b[7m'
 
 this_dir="$(dirname "$(realpath "$0")")"
-# this_dir=$HOME/REPOS/reinst
+# this_dir=$HOME/aggregate/reinst
 dot_config=$this_dir/config
 # dot_home=$this_dir/home
 config_dir=$HOME/.config
