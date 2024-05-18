@@ -200,6 +200,7 @@ echo -e "\u001b[32;1m Setting up Dotfiles...\u001b[0m"
 
 echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (a) ALL \u001b[0m"
+echo -e "  \u001b[34;1m (s) symlink \u001b[0m"
 echo -e "  \u001b[34;1m (1) neovim \u001b[0m"
 echo -e "  \u001b[34;1m (2) n \u001b[0m"
 echo -e "  \u001b[34;1m (3) latex \u001b[0m"
@@ -218,12 +219,8 @@ case $option in
 	all
 	;;
 
-"b")
-	backup_configs
-	;;
-
 "s")
-	setup_symlinks
+	back_sym
 	;;
 
 "1")
